@@ -30,7 +30,7 @@ const contactInfo: ContactInfo[] = [
 const ContactSection = () => {
   return (
     <section id="contact" className="py-20 bg-gray-50">
-      <div className="container mx-auto px-4">
+      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl lg:text-4xl font-serif mb-4">Contact Us</h2>
           <p className="text-xl max-w-3xl mx-auto">

@@ -1,2 +1,11 @@
 @import "tailwindcss";
 
+// Add this to your globals.css for ultra-smooth animations:
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  * {
+    @apply transition-colors duration-200;
+  }
+}
