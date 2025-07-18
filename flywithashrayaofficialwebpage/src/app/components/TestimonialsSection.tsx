@@ -1,4 +1,6 @@
-import { Testimonial } from '../types/common';
+"use client";
+import { motion } from "framer-motion";
+import { Testimonial } from "../types/common";
 
 const testimonials: Testimonial[] = [
   {
@@ -7,7 +9,7 @@ const testimonials: Testimonial[] = [
     author: "Sarah Johnson",
     role: "European Honeymoon",
     rating: 5,
-    image: "/images/testimonials/sarah.jpg"
+    image: "https://randomuser.me/api/portraits/women/32.jpg"
   },
   {
     id: 2,
@@ -15,7 +17,7 @@ const testimonials: Testimonial[] = [
     author: "Michael Chen",
     role: "Family Trip to Japan",
     rating: 5,
-    image: "/images/testimonials/michael.jpg"
+    image: "https://randomuser.me/api/portraits/men/45.jpg"
   },
   {
     id: 3,
@@ -23,25 +25,48 @@ const testimonials: Testimonial[] = [
     author: "Emily Rodriguez",
     role: "Solo Adventure in Bali",
     rating: 4.5,
-    image: "/images/testimonials/emily.jpg"
+    image: "https://randomuser.me/api/portraits/women/68.jpg"
   }
 ];
 
+import { easeOut } from "framer-motion";
+
+const containerVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.2, ease: easeOut, duration: 0.8 } }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { ease: easeOut, duration: 0.8 } }
+};
+
 const TestimonialsSection = () => {
   return (
-    <section id="testimonials" className="py-20 bg-gray-900 text-white relative">
+    <motion.section
+      id="testimonials"
+      className="py-20 bg-gray-900 text-white relative"
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+    >
       <div className="absolute inset-0 bg-black opacity-70"></div>
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-16">
+      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <motion.div className="text-center mb-16" variants={itemVariants}>
           <h2 className="text-3xl lg:text-4xl font-serif mb-4">Traveler Testimonials</h2>
           <p className="text-xl max-w-3xl mx-auto">
             Don't just take our word for it - hear from our satisfied travelers.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {testimonials.map((testimonial) => (
-            <div key={testimonial.id} className="bg-gray-800 bg-opacity-50 backdrop-blur-sm p-8 rounded-lg border border-gray-700 hover:border-blue-500 transition-all duration-300">
+            <motion.div
+              key={testimonial.id}
+              className="bg-gray-800 bg-opacity-50 backdrop-blur-sm p-8 rounded-lg border border-gray-700 hover:border-blue-500 transition-all duration-300"
+              variants={itemVariants}
+              whileHover={{ scale: 1.05 }}
+            >
               <div className="flex mb-4">
                 {[...Array(5)].map((_, i) => (
                   <svg
@@ -77,11 +102,11 @@ const TestimonialsSection = () => {
                   <p className="text-gray-400">{testimonial.role}</p>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
