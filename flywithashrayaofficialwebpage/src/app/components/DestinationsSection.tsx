@@ -96,7 +96,7 @@ const DestinationsSection = () => {
 
   if (!mounted) {
     return (
-      <section className="py-20 bg-blue-900 text-white relative overflow-hidden">
+      <section id="destinations" className="py-20 bg-blue-900 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-black opacity-70" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
@@ -116,7 +116,7 @@ const DestinationsSection = () => {
   }
 
   return (
-    <section className="py-20 bg-blue-900 text-white relative overflow-hidden">
+    <section id="destinations" className="py-20 bg-blue-900 text-white relative overflow-hidden">
       <div className="absolute inset-0 bg-black opacity-70" />
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
@@ -127,14 +127,19 @@ const DestinationsSection = () => {
         </div>
 
         <div className="relative flex items-center justify-center">
-          {/* Left arrow */}
           <button
             onClick={() => handleScroll("left")}
             disabled={isAnimating}
-            className="absolute left-0 z-20 bg-white/30 hover:bg-white/50 text-white rounded-full w-12 h-12 ml-2 transition-all"
+            className="absolute left-0 z-20 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white rounded-full w-12 h-12 flex items-center justify-center ml-4 transition-all transform hover:scale-110 active:scale-95 shadow-lg border border-white/20"
             aria-label="Scroll left"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              viewBox="0 0 24 24"
+            >
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
@@ -184,10 +189,16 @@ const DestinationsSection = () => {
           <button
             onClick={() => handleScroll("right")}
             disabled={isAnimating}
-            className="absolute right-0 z-20 bg-white/30 hover:bg-white/50 text-white rounded-full w-12 h-12 mr-2 transition-all"
+            className="absolute right-0 z-20 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white rounded-full w-12 h-12 flex items-center justify-center mr-4 transition-all transform hover:scale-110 active:scale-95 shadow-lg border border-white/20"
             aria-label="Scroll right"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              viewBox="0 0 24 24"
+            >
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
             </svg>
           </button>
