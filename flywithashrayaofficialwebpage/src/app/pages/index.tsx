@@ -8,6 +8,8 @@ import PackagesSection from '../components/PackagesSection';
 import ContactSection from '../components/ContactSection';
 import HeroSection from '../components/HeroSection';
 import TestimonialsSection from '../components/TestimonialsSection';
+import SpecialFares from '../components/SpecialFares';
+import TrustedPartners from '../components/TrustedPartners';
 
 
 const HomePage: NextPage = () => {
@@ -24,7 +26,8 @@ const HomePage: NextPage = () => {
         <AboutSection />
         <DestinationsSection />
         <PackagesSection />
-        {/* <SpecialsSection /> */}
+        <SpecialFares />
+      <TrustedPartners />
         <TestimonialsSection />
         <ContactSection />
       </main>
@@ -34,4 +37,6 @@ const HomePage: NextPage = () => {
 };
 
 export default HomePage;
+
+
 
