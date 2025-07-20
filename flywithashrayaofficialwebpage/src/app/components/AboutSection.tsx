@@ -1,5 +1,6 @@
 "use client";
 import { motion, useInView } from "framer-motion";
+import Link from "next/link";
 import { useRef } from "react";
 
 const AboutSection = () => {
@@ -13,7 +14,8 @@ const AboutSection = () => {
       opacity: 1,
       transition: {
         staggerChildren: 0.15,
-        delayChildren: 0.3
+        delayChildren: 0.3,
+        ease: "easeInOut"
       }
     }
   };
@@ -25,7 +27,7 @@ const AboutSection = () => {
       y: 0,
       transition: {
         duration: 0.8,
-        ease: [0.16, 1, 0.3, 1]
+        ease: "easeInOut"
       }
     }
   };
@@ -37,7 +39,7 @@ const AboutSection = () => {
       x: 0,
       transition: {
         duration: 1,
-        ease: [0.16, 1, 0.3, 1]
+        ease: "easeInOut"
       }
     }
   };
@@ -125,7 +127,8 @@ const AboutSection = () => {
             </motion.div>
 
             <motion.div variants={fadeIn}>
-              <motion.button 
+               <Link href="/about">
+               <motion.button 
                 className="relative overflow-hidden group bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 rounded-lg font-medium tracking-wide"
                 whileHover={{ 
                   scale: 1.02,
@@ -135,7 +138,8 @@ const AboutSection = () => {
               >
                 <span className="relative z-10">Discover Our Story</span>
                 <span className="absolute inset-0 bg-gradient-to-r from-blue-700 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-              </motion.button>
+              </motion.button></Link>
+              
             </motion.div>
           </motion.div>
 
@@ -215,6 +219,8 @@ const AboutSection = () => {
           </motion.div>
         </motion.div>
       </div>
+      {/* Certificates Section */}
+   
     </section>
   );
 };

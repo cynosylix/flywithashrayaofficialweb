@@ -9,6 +9,9 @@ const inter = Inter({
   variable: '--font-inter' // Optional: for CSS variable usage
 });
 
+import GoToTopButton from './components/GoToTopButton';
+import WhatsAppButton from './components/WhatsAppButton';
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -18,6 +21,8 @@ export default function RootLayout({
     <html lang="en" className={inter.className}>
       <body>
         {children}
+        <GoToTopButton />
+        <WhatsAppButton />
       </body>
     </html>
   );

@@ -2,6 +2,7 @@
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Package } from "../types/common";
+import Link from "next/link";
 
 const packages: Package[] = [
   {
@@ -106,7 +107,7 @@ const badgeVariants = {
 const PackagesSection = () => {
   const [activePackage, setActivePackage] = useState<number | null>(null);
   const controls = useAnimation();
-  
+
   // Auto-rotate feature
   useEffect(() => {
     const interval = setInterval(() => {
@@ -116,7 +117,7 @@ const PackagesSection = () => {
         return next;
       });
     }, 5000);
-    
+
     return () => clearInterval(interval);
   }, []);
 
@@ -125,14 +126,14 @@ const PackagesSection = () => {
       scale: 1,
       transition: { duration: 0.3 }
     });
-    
+
     setActivePackage(index);
-    
+
     await controls.start({
       scale: 1.05,
       transition: { duration: 0.4 }
     });
-    
+
     await controls.start({
       scale: 1,
       transition: { duration: 0.3 }
@@ -147,9 +148,9 @@ const PackagesSection = () => {
         <div className="absolute top-40 right-20 w-72 h-72 bg-amber-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
         <div className="absolute bottom-20 left-1/2 w-60 h-60 bg-emerald-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
       </div>
-      
+
       <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 relative z-10">
-        <motion.div 
+        <motion.div
           className="text-center mb-20"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -166,7 +167,7 @@ const PackagesSection = () => {
           </p>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
           variants={containerVariants}
           initial="hidden"
@@ -197,14 +198,13 @@ const PackagesSection = () => {
                   variants={imageHoverVariants}
                 />
                 {pkg.badge && (
-                  <motion.div 
-                    className={`absolute top-6 right-6 px-4 py-1.5 rounded-full text-sm font-bold shadow-lg z-20 ${
-                      pkg.badge === "Popular" 
-                        ? "bg-gradient-to-r from-amber-400 to-amber-500 text-gray-900" 
-                        : pkg.badge === "Best Seller" 
-                          ? "bg-gradient-to-r from-emerald-500 to-emerald-600 text-white" 
+                  <motion.div
+                    className={`absolute top-6 right-6 px-4 py-1.5 rounded-full text-sm font-bold shadow-lg z-20 ${pkg.badge === "Popular"
+                        ? "bg-gradient-to-r from-amber-400 to-amber-500 text-gray-900"
+                        : pkg.badge === "Best Seller"
+                          ? "bg-gradient-to-r from-emerald-500 to-emerald-600 text-white"
                           : "bg-gradient-to-r from-rose-500 to-pink-600 text-white"
-                    }`}
+                      }`}
                     variants={badgeVariants}
                   >
                     {pkg.badge}
@@ -227,22 +227,22 @@ const PackagesSection = () => {
                       {pkg.price}
                     </span>
                   </div>
-                  
+
                   <p className="text-gray-600 mb-6 text-base leading-relaxed">
                     {pkg.description}
                   </p>
-                  
+
                   <ul className="mb-8 space-y-3.5">
                     {pkg.features.map((feature, i) => (
-                      <motion.li 
-                        key={i} 
+                      <motion.li
+                        key={i}
                         className="flex items-start"
                         whileHover={{ x: 5 }}
                         transition={{ type: "spring", stiffness: 300 }}
                       >
-                        <svg 
-                          className="w-5 h-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" 
-                          fill="currentColor" 
+                        <svg
+                          className="w-5 h-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0"
+                          fill="currentColor"
                           viewBox="0 0 20 20"
                         >
                           <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -252,11 +252,11 @@ const PackagesSection = () => {
                     ))}
                   </ul>
                 </div>
-                
+
                 <div className="mt-auto">
                   <motion.button
                     className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-4 px-8 rounded-xl font-medium relative overflow-hidden group"
-                    whileHover={{ 
+                    whileHover={{
                       scale: 1.02,
                       boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)"
                     }}
@@ -273,7 +273,7 @@ const PackagesSection = () => {
                   </motion.button>
                 </div>
               </div>
-              
+
               {/* Glow effect */}
               <div className="absolute inset-0 rounded-3xl pointer-events-none overflow-hidden">
                 <div className="absolute inset-0 bg-blue-500/10 group-hover:opacity-100 opacity-0 transition-opacity duration-500 mix-blend-overlay" />
@@ -281,25 +281,27 @@ const PackagesSection = () => {
             </motion.div>
           ))}
         </motion.div>
-        
+
         {/* View all packages button */}
-        <motion.div 
+        <motion.div
           className="text-center mt-16"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
         >
-          <button className="inline-flex items-center justify-center px-8 py-4 border-2 border-gray-300 rounded-xl text-gray-700 font-medium hover:bg-gray-50 hover:border-gray-400 transition-all duration-300 group">
-            <span>View All Packages</span>
-            <svg 
-              className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </button>
+          <Link href="/packages">
+            <button className="inline-flex items-center justify-center px-8 py-4 border-2 border-gray-300 rounded-xl text-gray-700 font-medium hover:bg-gray-50 hover:border-gray-400 transition-all duration-300 group">
+              <span>View All Packages</span>
+              <svg
+                className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </button>
+          </Link>
         </motion.div>
       </div>
     </section>

@@ -3,6 +3,7 @@
 import { Destination } from "../types/common";
 import { useState, useEffect } from "react";
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 const destinations: Destination[] = [
   {
@@ -172,9 +173,11 @@ const DestinationsSection = () => {
                     <div className="absolute bottom-0 left-0 p-6 w-full">
                       <h3 className="text-2xl font-bold mb-2">{destination.title}</h3>
                       <p className="text-sm text-gray-300 mb-4">{destination.description}</p>
-                      <button className="bg-white text-gray-900 px-6 py-2 rounded-full font-semibold hover:bg-yellow-400 hover:text-gray-800 transition-colors">
+                       <Link href="/packages">
+                        <button className="bg-white text-gray-900 px-6 py-2 rounded-full font-semibold hover:bg-yellow-400 hover:text-gray-800 transition-colors">
                         Explore
-                      </button>
+                      </button></Link>
+                     
                     </div>
                     <div className="absolute top-4 right-4 bg-yellow-400 text-gray-900 px-4 py-1 rounded-full font-bold shadow-md">
                       {destination.price}
