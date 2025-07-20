@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
 import { useEffect, useRef } from "react";
 import Image from "next/image";
@@ -135,10 +136,11 @@ const Footer = () => {
 
   const quickLinks: FooterLink[] = [
     { text: "Home", url: "/" },
-    { text: "About Us", url: "/about" },
-    { text: "Destinations", url: "/destinations" },
+    { text: "About", url: "/about" },
+    { text: "Destinations", url: "/services" },
     { text: "Packages", url: "/packages" },
-    { text: "Special Deals", url: "/deals" }
+    { text: "Gallery", url: "/gallery" },
+    { text: "Contact", url: "/contact" }
   ];
 
   const supportLinks: FooterLink[] = [
