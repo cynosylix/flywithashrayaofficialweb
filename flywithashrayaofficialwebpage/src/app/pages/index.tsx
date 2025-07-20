@@ -10,6 +10,7 @@ import HeroSection from '../components/HeroSection';
 import TestimonialsSection from '../components/TestimonialsSection';
 import SpecialFares from '../components/SpecialFares';
 import TrustedPartners from '../components/TrustedPartners';
+import AffiliatedPartners from '../components/AffiliatedPartners';
 
 
 const HomePage: NextPage = () => {
@@ -27,7 +28,8 @@ const HomePage: NextPage = () => {
         <DestinationsSection />
         <PackagesSection />
         <SpecialFares />
-      <TrustedPartners />
+        <TrustedPartners />
+        <AffiliatedPartners />
         <TestimonialsSection />
         <ContactSection />
       </main>
