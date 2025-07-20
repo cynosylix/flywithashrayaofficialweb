@@ -25,6 +25,32 @@ const Header = () => {
     { href: "/contact", text: "Contact" }
   ];
 
+  const contactPhones = [
+    "+91 9400416016",
+    "+91 9400916016",
+    "+91 9496416016",
+    "+91 9778753870",
+    "+91 9074165989"
+  ];
+
+  const contactEmails = [
+    "info@flywithashraya.com",
+    "flywithashraya@gmail.com"
+  ];
+
+  const contactWebsite = "www.flywithashraya.com";
+
+  const socialLinks = {
+    facebook: "https://www.fcebook.com/flywithashraya",
+    instagram: "https://www.instagram.com/flywithashraya.in/",
+    pinterest: "https://in.pinterest.com/flywithashraya/",
+    tiktok: "https://www.tiktok.com/@flywithashraya?_t=8YOw6EdF3sf&_r=1",
+    twitter: "https://twitter.com/flywithashraya",
+    linkedin: "https://www.linkedin.com/in/fly-with-ashraya-ashraya-digital-b21891259",
+    youtube1: "https://www.youtube.com/channel/UChbCpwt-R8okU1LhEw-gB0g",
+    youtube2: "https://www.youtube.com/@flywithashraya"
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       const sections = document.querySelectorAll('section[id]');
