@@ -21,7 +21,8 @@ const Header = () => {
     { href: "/packages", text: "Packages" },
     { href: "#specials", text: "Special Fares" },
     { href: "#testimonials", text: "Reviews" },
-    { href: "#contact", text: "Contact" }
+    { href: "/gallery", text: "Gallery" },
+    { href: "/contact", text: "Contact" }
   ];
 
   useEffect(() => {
