@@ -1,2 +1,5 @@
 npm install react-icons
 npm install framer-motion
+npm install @react-google-maps/api
+npm install framer-motion react-icons @react-google-maps/api
+npm install react-masonry-css
