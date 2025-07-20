@@ -15,12 +15,12 @@ const Header = () => {
   });
 
   const navLinks = [
-    { href: "#home", text: "Home" },
+    { href: "/#home", text: "Home" },
     { href: "/about", text: "About" },
     { href: "/services", text: "Destinations" },
     { href: "/packages", text: "Packages" },
-    { href: "#specials", text: "Special Fares" },
-    { href: "#testimonials", text: "Reviews" },
+    { href: "/#specials", text: "Special Fares" },
+    { href: "/#testimonials", text: "Reviews" },
     { href: "/gallery", text: "Gallery" },
     { href: "/contact", text: "Contact" }
   ];
