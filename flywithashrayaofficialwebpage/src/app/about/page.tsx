@@ -23,26 +23,26 @@ const AboutSection = () => {
   const teamMembers = [
     {
       id: 1,
-      name: "Sarah Johnson",
-      role: "Travel Designer",
+      name: "Nikhil Chamakalayil",
+      role: "Managing Director",
       image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200"
     },
     {
       id: 2,
-      name: "Michael Chen",
-      role: "Destination Expert",
+      name: "Sreelekha  Sajeev",
+      role: "Head of operations & Accounts",
       image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200"
     },
     {
       id: 3,
-      name: "Priya Patel",
-      role: "Luxury Travel Specialist",
+      name: "Sarany VS",
+      role: "Customer Relationship Manager",
       image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=200"
     },
     {
       id: 4,
-      name: "David Wilson",
-      role: "Adventure Curator",
+      name: "Karolin Thomas",
+      role: "Travel COnsultant Visa",
       image: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=200"
     },
     {
@@ -53,16 +53,11 @@ const AboutSection = () => {
     },
     {
       id: 6,
-      name: "James Rodriguez",
-      role: "Logistics Manager",
+      name: "Sajini Abhilash",
+      role: "Jr. Travel Consultant",
       image: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=200"
     },
-    {
-      id: 7,
-      name: "Emily Zhang",
-      role: "Cultural Specialist",
-      image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200"
-    }
+    
   ];
 
   // B2B Suppliers Data
