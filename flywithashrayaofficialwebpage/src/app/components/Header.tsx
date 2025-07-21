@@ -3,6 +3,13 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import Image from 'next/image';
+import { 
+  logoVariants, 
+  navItemVariants, 
+  underlineVariants, 
+  mobileMenuVariants, 
+  mobileItemVariants 
+} from '../animationVariants';
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -25,31 +32,7 @@ const Header = () => {
     { href: "/contact", text: "Contact" }
   ];
 
-  const contactPhones = [
-    "+91 9400416016",
-    "+91 9400916016",
-    "+91 9496416016",
-    "+91 9778753870",
-    "+91 9074165989"
-  ];
-
-  const contactEmails = [
-    "info@flywithashraya.com",
-    "flywithashraya@gmail.com"
-  ];
-
-  const contactWebsite = "www.flywithashraya.com";
-
-  const socialLinks = {
-    facebook: "https://www.fcebook.com/flywithashraya",
-    instagram: "https://www.instagram.com/flywithashraya.in/",
-    pinterest: "https://in.pinterest.com/flywithashraya/",
-    tiktok: "https://www.tiktok.com/@flywithashraya?_t=8YOw6EdF3sf&_r=1",
-    twitter: "https://twitter.com/flywithashraya",
-    linkedin: "https://www.linkedin.com/in/fly-with-ashraya-ashraya-digital-b21891259",
-    youtube1: "https://www.youtube.com/channel/UChbCpwt-R8okU1LhEw-gB0g",
-    youtube2: "https://www.youtube.com/@flywithashraya"
-  };
+  // Removed unused variables contactPhones, contactEmails, contactWebsite, socialLinks
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,8 +40,9 @@ const Header = () => {
       let current = '';
 
       sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
+        const sectionElement = section as HTMLElement;
+        const sectionTop = sectionElement.offsetTop;
+        // Removed unused variable sectionHeight
         if (window.scrollY >= sectionTop - 300) {
           current = `#${section.id}`;
         }
@@ -70,90 +54,6 @@ const Header = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const logoVariants = {
-    initial: { opacity: 0, x: -20 },
-    animate: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.16, 1, 0.3, 1]
-      }
-    },
-    hover: {
-      scale: 1.1,
-      transition: {
-        type: "spring",
-        stiffness: 400,
-        damping: 10
-      }
-    }
-  };
-
-  const navItemVariants = {
-    initial: { opacity: 0, y: -10 },
-    animate: (index) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: 0.05 * index,
-        duration: 0.5,
-        ease: [0.16, 1, 0.3, 1]
-      }
-    }),
-    hover: {
-      color: "#3b82f6",
-      transition: {
-        duration: 0.2
-      }
-    }
-  };
-
-  const underlineVariants = {
-    initial: { width: 0 },
-    hover: { width: "100%" },
-    active: { width: "100%" }
-  };
-
-  const mobileMenuVariants = {
-    initial: {
-      opacity: 0,
-      height: 0,
-      y: -20
-    },
-    animate: {
-      opacity: 1,
-      height: "auto",
-      y: 0,
-      transition: {
-        duration: 0.4,
-        ease: [0.16, 1, 0.3, 1]
-      }
-    },
-    exit: {
-      opacity: 0,
-      height: 0,
-      y: -20,
-      transition: {
-        duration: 0.3,
-        ease: [0.16, 1, 0.3, 1]
-      }
-    }
-  };
-
-  const mobileItemVariants = {
-    initial: { opacity: 0, x: -20 },
-    animate: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.3,
-        ease: "easeOut"
-      }
-    },
-    exit: { opacity: 0, x: -20 }
-  };
 
   return (
     <header className="fixed top-0 w-full z-50">

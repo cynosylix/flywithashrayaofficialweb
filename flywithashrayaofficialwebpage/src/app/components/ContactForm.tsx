@@ -37,9 +37,9 @@ const ContactForm = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Talk With <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-pink-400">Our Team</span>
           </h2>
-          <p className="text-lg text-white/80 max-w-2xl mx-auto">
-            Any questions? We're here to help. Connect with us via socials or send a message.
-          </p>
+         <p className="text-lg text-white/80 max-w-2xl mx-auto">
+  Any questions? We&apos;re here to help. Connect with us via socials or send a message.
+</p>
         </motion.div>
 
         <div className="flex flex-col lg:flex-row gap-12 bg-white/10 backdrop-blur-lg rounded-2xl overflow-hidden border border-white/20 shadow-2xl">

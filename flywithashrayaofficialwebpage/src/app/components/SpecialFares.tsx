@@ -1,6 +1,10 @@
 "use client";
 import { motion, useInView, useAnimation } from "framer-motion";
 import { useEffect, useRef } from "react";
+import { cardVariants, containerVariants, FeatureItemVariants, floatingOrbVariants, PriceVariants, TitleVariants } from "../animationVariants";
+
+
+
 
 const SpecialFares = () => {
   const ref = useRef(null);
@@ -61,89 +65,6 @@ const SpecialFares = () => {
     }
   ];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.3
-      }
-    }
-  };
-
-  const cardVariants = {
-    hidden: { y: 50, opacity: 0, rotateX: -15 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      rotateX: 0,
-      transition: {
-        type: "spring",
-        damping: 15,
-        stiffness: 100,
-        mass: 0.5
-      }
-    },
-    hover: {
-      y: -15,
-      rotateX: 5,
-      boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
-      transition: {
-        type: "spring",
-        stiffness: 300,
-        damping: 10
-      }
-    }
-  };
-
-  const titleVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: "easeInOut"
-      }
-    }
-  };
-
-  const priceVariants = {
-    hover: {
-      scale: 1.05,
-      textShadow: "0 0 10px rgba(255, 255, 255, 0.3)",
-      transition: {
-        type: "spring",
-        stiffness: 500
-      }
-    }
-  };
-
-  const featureItemVariants = {
-    hidden: { opacity: 0, x: -10 },
-    visible: (i: number) => ({
-      opacity: 1,
-      x: 0,
-      transition: {
-        delay: 0.5 + i * 0.1,
-        duration: 0.3
-      }
-    })
-  };
-
-  const floatingOrbVariants = {
-    initial: { y: 0, x: 0 },
-    animate: (i: number) => ({
-      y: [0, -20, 0],
-      x: [0, i % 2 === 0 ? 10 : -10, 0],
-      transition: {
-        duration: 5 + i * 2,
-        repeat: Infinity,
-        ease: ["easeInOut"]
-      }
-    })
-  };
 
   // Checkmark SVG component
   const CheckmarkIcon = () => (
@@ -195,7 +116,7 @@ const SpecialFares = () => {
           className="text-center mb-20"
           initial="hidden"
           animate={controls}
-          variants={titleVariants}
+          variants={TitleVariants}
         >
           <motion.h2 
             className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-yellow-500 mb-6"
@@ -259,7 +180,7 @@ const SpecialFares = () => {
                   {/* Price */}
                   <motion.div 
                     className="text-center mb-8"
-                    variants={priceVariants}
+                    variants={PriceVariants}
                     whileHover="hover"
                   >
                     <div className="text-5xl font-bold text-white">
@@ -280,7 +201,7 @@ const SpecialFares = () => {
                         key={i}
                         className="flex items-start"
                         custom={i}
-                        variants={featureItemVariants}
+                        variants={FeatureItemVariants}
                       >
                         <CheckmarkIcon />
                         <span className="text-gray-300">{feature}</span>

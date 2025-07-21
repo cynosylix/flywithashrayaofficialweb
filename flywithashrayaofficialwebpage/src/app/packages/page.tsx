@@ -1,10 +1,10 @@
 "use client";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { Star, MapPin, Clock, Users, Activity, Calendar } from "react-feather";
+import { MapPin, Clock, Users, Activity, Calendar } from "react-feather";
 
 type Package = {
   id: number;
@@ -73,7 +73,7 @@ const samplePackages: Package[] = [
         name: "Alice Johnson", 
         rating: 5, 
         date: "May 2023", 
-        comment: "This was the most magical vacation we've ever taken. Every detail was perfect and the service was impeccable.", 
+        comment: "This was the most magical vacation we&apos;ve ever taken. Every detail was perfect and the service was impeccable.", 
         avatar: "https://media.istockphoto.com/id/1318055588/photo/mid-adult-male-tourist-with-smart-phone-in-barcelona.jpg?s=612x612&w=0&k=20&c=1HhtD3_fDcvXnDskeFcX7MVqDEwrBQOtmBOem-4eqZk=" 
       },
     ],
@@ -83,7 +83,7 @@ const samplePackages: Package[] = [
   {
     id: 2,
     title: "European Cultural Journey",
-    description: "Immerse yourself in the rich history, art, and cuisine of Europe's most iconic cities. From Parisian boulevards to Roman ruins, this tour brings history to life.",
+    description: "Immerse yourself in the rich history, art, and cuisine of Europe&apos;s most iconic cities. From Parisian boulevards to Roman ruins, this tour brings history to life.",
     price: "$3,199",
     duration: "10 Days / 9 Nights",
     features: ["VIP museum access", "Local expert guides", "Gourmet dining experiences", "Wine tasting", "Private transportation"],
@@ -124,8 +124,6 @@ const samplePackages: Package[] = [
 ];
 
 const PackageCard = ({ packageData }: { packageData: Package }) => {
-  const [activeTab, setActiveTab] = useState("overview");
-  const [selectedImage, setSelectedImage] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isMounted, setIsMounted] = useState(false);
   
@@ -303,7 +301,7 @@ const PackagesPage = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-xl text-gray-600 max-w-3xl mx-auto"
           >
-            Discover our handcrafted journeys designed to immerse you in the world's most extraordinary destinations.
+            Discover our handcrafted journeys designed to immerse you in the world&apos;s most extraordinary destinations.
           </motion.p>
         </div>
         

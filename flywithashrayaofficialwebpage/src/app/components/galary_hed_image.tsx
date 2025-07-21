@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { IoIosGlobe, IoMdImages } from "react-icons/io";
+import {  IoMdImages } from "react-icons/io";
 
 const GalleryGlobalPresence = () => {
   return (

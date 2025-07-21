@@ -7,11 +7,7 @@ import Header from "../components/Header";
 import ContactForm from "../components/ContactForm";
 
 const ContactPage = () => {
-  const mapContainerStyle = {
-    width: '100%',
-    height: '300px',
-    borderRadius: '12px'
-  };
+
 
   
 

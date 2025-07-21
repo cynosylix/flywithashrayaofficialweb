@@ -1,5 +1,5 @@
 "use client";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, easeInOut, backOut } from "framer-motion";
 import Link from "next/link";
 import { useRef } from "react";
 
@@ -15,7 +15,7 @@ const AboutSection = () => {
       transition: {
         staggerChildren: 0.15,
         delayChildren: 0.3,
-        ease: "easeInOut"
+        ease: easeInOut
       }
     }
   };
@@ -27,7 +27,7 @@ const AboutSection = () => {
       y: 0,
       transition: {
         duration: 0.8,
-        ease: "easeInOut"
+        ease: easeInOut
       }
     }
   };
@@ -39,7 +39,7 @@ const AboutSection = () => {
       x: 0,
       transition: {
         duration: 1,
-        ease: "easeInOut"
+        ease: easeInOut
       }
     }
   };
@@ -53,7 +53,7 @@ const AboutSection = () => {
       transition: {
         delay: i * 0.15,
         duration: 0.7,
-        ease: "backOut"
+        ease: backOut
       }
     }
   });
@@ -104,7 +104,7 @@ const AboutSection = () => {
               className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12"
               variants={container}
             >
-              {[
+              {[ 
                 { value: "10K+", label: "Happy Travelers", icon: "👨‍👩‍👧‍👦" },
                 { value: "50+", label: "Destinations", icon: "✈️" },
                 { value: "24/7", label: "Support", icon: "🛎️" },

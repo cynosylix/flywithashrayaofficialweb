@@ -1,6 +1,13 @@
 "use client";
 import { motion, useInView, useAnimation } from "framer-motion";
 import { useEffect, useRef } from "react";
+import Image from "next/image"; // Added Next.js Image component
+
+import {
+  partnerItemVariants,
+  partnersTitleVariants
+  // Removed unused imports: partnersContainerVariants, ctaButtonVariants
+} from "../animationVariants";
 
 const TrustedPartners = () => {
   const ref = useRef(null);
@@ -19,39 +26,8 @@ const TrustedPartners = () => {
     }
   };
 
-  const itemVariants = {
-    hidden: { y: 50, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        damping: 15,
-        stiffness: 100
-      }
-    },
-    hover: {
-      y: -10,
-      scale: 1.05,
-      transition: {
-        type: "spring",
-        stiffness: 300,
-        damping: 10
-      }
-    }
-  };
-
-  const titleVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.16, 1, 0.3, 1]
-      }
-    }
-  };
+  // Removed unused itemVariants since we're using partnerItemVariants from the imported file
+  // Removed unused titleVariants since we're using partnersTitleVariants from the imported file
 
   useEffect(() => {
     if (isInView) {
@@ -103,7 +79,7 @@ const TrustedPartners = () => {
           className="text-center mb-20"
           initial="hidden"
           animate={controls}
-          variants={titleVariants}
+          variants={partnersTitleVariants}
         >
           <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
             Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Trusted Partners</span>
@@ -123,13 +99,15 @@ const TrustedPartners = () => {
             <motion.div 
               key={index}
               className="flex flex-col items-center"
-              variants={itemVariants}
+              variants={partnerItemVariants}
               whileHover="hover"
             >
               <div className={`relative w-32 h-32 rounded-2xl ${partner.bgColor} p-6 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center`}>
-                <img 
+                <Image 
                   src={partner.logo} 
                   alt={partner.name}
+                  width={128} // Set appropriate width
+                  height={128} // Set appropriate height
                   className="w-full h-full object-contain grayscale hover:grayscale-0 transition-all duration-500"
                 />
               </div>
