@@ -9,7 +9,7 @@ import ContactSection from '../components/ContactSection';
 import HeroSection from '../components/HeroSection';
 import TestimonialsSection from '../components/TestimonialsSection';
 import SpecialFares from '../components/SpecialFares';
-import TrustedPartners from '../components/TrustedPartners';
+// import TrustedPartners from '../components/TrustedPartners';
 import AffiliatedPartners from '../components/AffiliatedPartners';
 
 
@@ -28,7 +28,7 @@ const HomePage: NextPage = () => {
         <DestinationsSection />
         <PackagesSection />
         <SpecialFares />
-        <TrustedPartners />
+        {/* <TrustedPartners /> */}
         <AffiliatedPartners />
         <TestimonialsSection />
         <ContactSection />
