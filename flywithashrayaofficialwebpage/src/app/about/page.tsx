@@ -59,38 +59,66 @@ const AboutSection = () => {
   const b2bSuppliers = [
     {
       id: 1,
-      name: "Global Flight Network",
-      logo: "https://images.unsplash.com/photo-1583422409516-2895a77efded?w=200",
+      name: "Agent Box",
+      logo: "/B2B-Images/agentbox.png",
       services: ["Airline Tickets", "Group Bookings", "Last-minute Deals"],
       coverage: "100+ Airlines"
     },
     {
       id: 2,
-      name: "Luxury Stays International",
-      logo: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=200",
+      name: "EasyMyTrip",
+      logo: "/B2B-Images/easymytrip.png",
       services: ["5-Star Hotels", "Resorts", "Villas"],
       coverage: "50+ Countries"
     },
     {
       id: 3,
-      name: "Adventure Tours Co.",
-      logo: "https://images.unsplash.com/photo-1520250497631-0f9c47a5f98f?w=200",
-      services: ["Custom Packages", "Guided Tours", "Activity Bookings"],
-      coverage: "Worldwide"
+      name: "Akbar Travels",
+      logo: "/B2B-Images/akbartravels.jpeg",
+      services: ["Flight Bookings", "Holiday Packages", "Visa Assistance"],
+      coverage: "India & Middle East"
     },
     {
       id: 4,
-      name: "TransGlobal Logistics",
-      logo: "https://images.unsplash.com/photo-1500380804539-4e1e8c1e7118?w=200",
-      services: ["Airport Transfers", "Car Rentals", "Private Chauffeurs"],
-      coverage: "24/7 Global Support"
+      name: "Air IQ",
+      logo: "/B2B-Images/airIQ.webp",
+      services: ["Flight Data", "Analytics", "Travel Insights"],
+      coverage: "Global"
     },
     {
       id: 5,
-      name: "Visa Solutions Pro",
-      logo: "https://images.unsplash.com/photo-1581067721837-e4809b29692d?w=200",
-      services: ["Visa Processing", "Documentation", "Fast-track Services"],
-      coverage: "50+ Countries"
+      name: "Al Hind",
+      logo: "/B2B-Images/alhind.avif",
+      services: ["Travel Insurance", "Visa Services", "Customer Support"],
+      coverage: "Worldwide"
+    },
+    {
+      id: 6,
+      name: "Fly Creative",
+      logo: "/B2B-Images/flycreative.png",
+      services: ["Marketing", "Travel Campaigns", "Branding"],
+      coverage: "Global"
+    },
+    {
+      id: 7,
+      name: "Trip Jack",
+      logo: "/B2B-Images/logotripjack.png",
+      services: ["Custom Packages", "Group Tours", "Event Travel"],
+      coverage: "Worldwide"
+    },
+    {
+      id: 8,
+      name: "Make My Trip",
+      logo: "/B2B-Images/makemytrip.svg",
+      services: ["Flight Bookings", "Hotel Reservations", "Holiday Packages"],
+      coverage: "India & International"
+    },
+    {
+      id: 9,
+      name: "Yatra",
+      logo: "/B2B-Images/yatra.png",
+      services: ["Flight Bookings", "Bus Tickets", "Hotel Bookings"],
+      coverage: "India & Abroad"
     }
   ];
 
@@ -426,7 +454,7 @@ href={cert.file}
             ))}
           </motion.div>
 
-          <motion.div
+          {/* <motion.div
             variants={fadeInUp}
             className="mt-16 bg-blue-50 rounded-2xl p-8 md:p-12 relative overflow-hidden"
           >
@@ -445,7 +473,7 @@ href={cert.file}
                 </div>
               </div>
             </div>
-          </motion.div>
+          </motion.div> */}
         </div>
       </section>
 
