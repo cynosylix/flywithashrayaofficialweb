@@ -80,7 +80,7 @@ const AffiliatedPartners = () => {
             transition={{ delay: 0.4, duration: 0.8 }}
             className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed"
           >
-            We're proud to be officially affiliated with these industry leaders, bringing you verified services and exclusive benefits.
+            We&apos;re proud to be officially affiliated with these industry leaders, bringing you verified services and exclusive benefits.
           </motion.p>
         </motion.div>
 
