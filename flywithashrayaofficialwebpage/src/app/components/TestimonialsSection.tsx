@@ -1,12 +1,14 @@
 "use client";
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 import { Testimonial } from "../types/common";
+import { testimonialCardVariants, testimonialsContainerVariants } from "../animationVariants";
 
 const testimonials: Testimonial[] = [
   {
     id: 1,
-    content: `"FlyWithAshraya planned the perfect honeymoon for us! Every detail was taken care of, from the romantic dinners to the private tours. We didn't have to worry about a thing and could just enjoy our special time together."`,
+    content: `&ldquo;FlyWithAshraya planned the perfect honeymoon for us! Every detail was taken care of, from the romantic dinners to the private tours. We didn&apos;t have to worry about a thing and could just enjoy our special time together.&rdquo;`,
     author: "Sarah Johnson",
     role: "European Honeymoon",
     rating: 5,
@@ -14,7 +16,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: 2,
-    content: `"The family vacation package to Japan was incredible. The team at FlyWithAshraya understood exactly what we needed to keep both kids and adults happy. The guides were knowledgeable and patient with our children."`,
+    content: `&ldquo;The family vacation package to Japan was incredible. The team at FlyWithAshraya understood exactly what we needed to keep both kids and adults happy. The guides were knowledgeable and patient with our children.&rdquo;`,
     author: "Michael Chen",
     role: "Family Trip to Japan",
     rating: 5,
@@ -22,7 +24,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: 3,
-    content: `"I've used many travel agencies before, but FlyWithAshraya stands out. Their attention to detail and personalized service is unmatched. When our flight was delayed, they had already rebooked our transfers!"`,
+    content: `&ldquo;I&apos;ve used many travel agencies before, but FlyWithAshraya stands out. Their attention to detail and personalized service is unmatched. When our flight was delayed, they had already rebooked our transfers!&rdquo;`,
     author: "Emily Rodriguez",
     role: "Solo Adventure in Bali",
     rating: 4.5,
@@ -30,7 +32,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: 4,
-    content: `"Our luxury safari experience was beyond expectations. FlyWithAshraya's connections got us exclusive lodges and private game drives we couldn't have booked on our own. Worth every penny!"`,
+    content: `&ldquo;Our luxury safari experience was beyond expectations. FlyWithAshraya&apos;s connections got us exclusive lodges and private game drives we couldn&apos;t have booked on our own. Worth every penny!&rdquo;`,
     author: "David Wilson",
     role: "African Safari",
     rating: 5,
@@ -38,46 +40,13 @@ const testimonials: Testimonial[] = [
   },
   {
     id: 5,
-    content: `"As a solo female traveler, safety is my top concern. FlyWithAshraya arranged everything perfectly - vetted hotels, reliable drivers, and 24/7 support. I felt secure the entire trip."`,
+    content: `&ldquo;As a solo female traveler, safety is my top concern. FlyWithAshraya arranged everything perfectly - vetted hotels, reliable drivers, and 24/7 support. I felt secure the entire trip.&rdquo;`,
     author: "Priya Patel",
     role: "Southeast Asia Tour",
     rating: 5,
     image: "https://randomuser.me/api/portraits/women/44.jpg"
   }
 ];
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-      ease: [0.16, 1, 0.3, 1],
-      duration: 1
-    }
-  }
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 60, scale: 0.96 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      ease: [0.16, 1, 0.3, 1],
-      duration: 0.8
-    }
-  },
-  hover: {
-    y: -10,
-    boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.3)",
-    transition: {
-      duration: 0.4,
-      ease: "easeOut"
-    }
-  }
-};
 
 const quoteVariants = {
   hover: {
@@ -98,7 +67,7 @@ const TestimonialsSection = () => {
     setIsMounted(true);
   }, []);
 
-  const handleNext = async () => {
+  const handleNext = useCallback(async () => {
     if (isAnimating || !isMounted) return;
     setIsAnimating(true);
     
@@ -118,9 +87,9 @@ const TestimonialsSection = () => {
     });
     
     setIsAnimating(false);
-  };
+  }, [controls, isAnimating, isMounted]);
 
-  const handlePrev = async () => {
+  const handlePrev = useCallback(async () => {
     if (isAnimating || !isMounted) return;
     setIsAnimating(true);
     
@@ -140,7 +109,7 @@ const TestimonialsSection = () => {
     });
     
     setIsAnimating(false);
-  };
+  }, [controls, isAnimating, isMounted]);
 
   // Auto-rotate testimonials
   useEffect(() => {
@@ -151,7 +120,7 @@ const TestimonialsSection = () => {
     }, 6000);
     
     return () => clearInterval(interval);
-  }, [isMounted, isAnimating]);
+  }, [isMounted, isAnimating, handleNext]);
 
   if (!isMounted) {
     return (
@@ -187,15 +156,17 @@ const TestimonialsSection = () => {
                 </div>
                 
                 <blockquote className="text-lg mb-8 relative pl-6">
-                  <span className="absolute top-0 left-0 text-5xl text-blue-500/30 font-serif leading-none">"</span>
-                  <span className="relative z-10">{testimonial.content}</span>
+                  <span className="absolute top-0 left-0 text-5xl text-blue-500/30 font-serif leading-none">&ldquo;</span>
+                  <span className="relative z-10" dangerouslySetInnerHTML={{ __html: testimonial.content }} />
                 </blockquote>
                 
                 <div className="flex items-center">
                   <div className="relative mr-4">
-                    <img
+                    <Image
                       src={testimonial.image}
                       alt={testimonial.author}
+                      width={64}
+                      height={64}
                       className="w-16 h-16 rounded-full border-2 border-amber-400/80 object-cover"
                     />
                     <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center border-2 border-gray-800">
@@ -248,7 +219,7 @@ const TestimonialsSection = () => {
         {/* Desktop Grid View */}
         <motion.div 
           className="hidden lg:grid grid-cols-3 gap-8"
-          variants={containerVariants}
+          variants={testimonialsContainerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
@@ -257,7 +228,7 @@ const TestimonialsSection = () => {
             <motion.div
               key={testimonial.id}
               className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl border border-gray-700 hover:border-blue-500 transition-all duration-500 relative overflow-hidden"
-              variants={itemVariants}
+              variants={testimonialCardVariants}
               whileHover="hover"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-blue-900/10 to-transparent pointer-events-none"></div>
@@ -279,15 +250,17 @@ const TestimonialsSection = () => {
                 className="text-lg mb-8 relative pl-6"
                 variants={quoteVariants}
               >
-                <span className="absolute top-0 left-0 text-5xl text-blue-500/30 font-serif leading-none">"</span>
-                <span className="relative z-10">{testimonial.content}</span>
+                <span className="absolute top-0 left-0 text-5xl text-blue-500/30 font-serif leading-none">&ldquo;</span>
+                <span className="relative z-10" dangerouslySetInnerHTML={{ __html: testimonial.content }} />
               </motion.blockquote>
               
               <div className="flex items-center">
                 <div className="relative mr-4">
-                  <img
+                  <Image
                     src={testimonial.image}
                     alt={testimonial.author}
+                    width={64}
+                    height={64}
                     className="w-16 h-16 rounded-full border-2 border-amber-400/80 object-cover"
                   />
                   <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center border-2 border-gray-800">
@@ -341,15 +314,17 @@ const TestimonialsSection = () => {
                 </div>
                 
                 <blockquote className="text-lg mb-8 relative pl-6">
-                  <span className="absolute top-0 left-0 text-5xl text-blue-500/30 font-serif leading-none">"</span>
-                  <span className="relative z-10">{testimonials[activeIndex].content}</span>
+                  <span className="absolute top-0 left-0 text-5xl text-blue-500/30 font-serif leading-none">&ldquo;</span>
+                  <span className="relative z-10" dangerouslySetInnerHTML={{ __html: testimonials[activeIndex].content }} />
                 </blockquote>
                 
                 <div className="flex items-center">
                   <div className="relative mr-4">
-                    <img
+                    <Image
                       src={testimonials[activeIndex].image}
                       alt={testimonials[activeIndex].author}
+                      width={64}
+                      height={64}
                       className="w-16 h-16 rounded-full border-2 border-amber-400/80 object-cover"
                     />
                     <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center border-2 border-gray-800">

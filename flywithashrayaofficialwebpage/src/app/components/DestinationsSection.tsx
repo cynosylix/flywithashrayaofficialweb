@@ -1,9 +1,10 @@
 "use client";
 
 import { Destination } from "../types/common";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 
 const destinations: Destination[] = [
   {
@@ -63,7 +64,7 @@ const DestinationsSection = () => {
     });
   };
 
-  const handleScroll = async (dir: "left" | "right") => {
+  const handleScroll = useCallback(async (dir: "left" | "right") => {
     if (isAnimating) return;
 
     setIsAnimating(true);
@@ -81,7 +82,7 @@ const DestinationsSection = () => {
 
     controls.set({ x: 0, opacity: 1 });
     setIsAnimating(false);
-  };
+  }, [controls, isAnimating]);
 
   // Auto-scroll every 5s
   useEffect(() => {
@@ -91,7 +92,7 @@ const DestinationsSection = () => {
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [mounted, isAnimating]);
+  }, [mounted, isAnimating, handleScroll]);
 
   const visibleDestinations = getVisibleDestinations();
 
@@ -103,7 +104,7 @@ const DestinationsSection = () => {
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-serif mb-4">Our Featured Destinations</h2>
             <p className="text-xl max-w-3xl mx-auto">
-              Explore our handpicked selection of the world's most captivating destinations.
+              Explore our handpicked selection of the world&apos;s most captivating destinations.
             </p>
           </div>
           <div className="flex justify-center gap-8">
@@ -123,7 +124,7 @@ const DestinationsSection = () => {
         <div className="text-center mb-16">
           <h2 className="text-3xl lg:text-4xl font-serif mb-4">Our Featured Destinations</h2>
           <p className="text-xl max-w-3xl mx-auto">
-            Explore our handpicked selection of the world's most captivating destinations.
+            Explore our handpicked selection of the world&apos;s most captivating destinations.
           </p>
         </div>
 
@@ -164,20 +165,23 @@ const DestinationsSection = () => {
                     className="relative rounded-xl overflow-hidden h-[28rem] w-80 flex-shrink-0 bg-gray-800 group shadow-2xl"
                     whileHover={{ scale: 1.03 }}
                   >
-                    <img
+                    <Image
                       src={destination.image}
                       alt={destination.title}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      width={320}
+                      height={448}
+                      priority
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
                     <div className="absolute bottom-0 left-0 p-6 w-full">
                       <h3 className="text-2xl font-bold mb-2">{destination.title}</h3>
                       <p className="text-sm text-gray-300 mb-4">{destination.description}</p>
-                       <Link href="/packages">
+                      <Link href="/packages">
                         <button className="bg-white text-gray-900 px-6 py-2 rounded-full font-semibold hover:bg-yellow-400 hover:text-gray-800 transition-colors">
-                        Explore
-                      </button></Link>
-                     
+                          Explore
+                        </button>
+                      </Link>
                     </div>
                     <div className="absolute top-4 right-4 bg-yellow-400 text-gray-900 px-4 py-1 rounded-full font-bold shadow-md">
                       {destination.price}

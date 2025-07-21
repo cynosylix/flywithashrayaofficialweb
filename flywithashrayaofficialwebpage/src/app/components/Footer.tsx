@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 type SocialMedia = {
-  icon: JSX.Element;
+  icon: React.ReactNode;
   color: string;
   url: string;
   name: string;
@@ -39,49 +39,48 @@ const Footer = () => {
     },
   };
 
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        damping: 12,
-        stiffness: 100,
-      },
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      type: "spring" as const,
+      damping: 12,
+      stiffness: 100,
     },
-  };
+  },
+};
 
   const socialIconVariants = {
     hover: {
       y: -5,
       scale: 1.1,
       transition: {
-        type: "spring",
+        type: "spring" as const,
         stiffness: 400,
         damping: 10,
       },
     },
   };
 
-  const linkVariants = {
-    hover: {
-      x: 5,
-      color: "#ffffff",
-      transition: {
-        type: "spring",
-        stiffness: 300,
-      },
+ const linkVariants = {
+  hover: {
+    x: 5,
+    color: "#ffffff",
+    transition: {
+      type: "spring" as const,
+      stiffness: 300,
     },
-  };
+  },
+};
 
   const newsletterButtonVariants = {
     initial: { scale: 1 },
     hover: {
       scale: 1.03,
-      boxShadow: "0 5px 15px rgba(59, 130, 246, 0.4)",
       transition: {
-        type: "spring",
+        type: "spring" as const,
         stiffness: 400,
         damping: 10,
       },
@@ -90,6 +89,7 @@ const Footer = () => {
       scale: 0.98,
     },
   };
+
 
   const socialMedia: SocialMedia[] = [
     {

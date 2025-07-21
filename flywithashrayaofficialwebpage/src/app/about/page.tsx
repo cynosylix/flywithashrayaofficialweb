@@ -2,7 +2,8 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { motion } from 'framer-motion';
-import { FiGlobe, FiHeart, FiShield, FiAward, FiMapPin, FiUsers, FiTarget, FiEye, FiBriefcase } from 'react-icons/fi';
+import Image from 'next/image';
+import { FiGlobe, FiHeart, FiShield, FiAward, FiMapPin, FiTarget, FiEye, FiBriefcase } from 'react-icons/fi';
 
 const AboutSection = () => {
   // Animation variants
@@ -57,7 +58,6 @@ const AboutSection = () => {
       role: "Jr. Travel Consultant",
       image: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=200"
     },
-    
   ];
 
   // B2B Suppliers Data
@@ -143,11 +143,13 @@ const AboutSection = () => {
               <motion.div variants={fadeInUp} className="flex items-center gap-4">
                 <div className="flex -space-x-2">
                   {teamMembers.slice(0, 4).map((member) => (
-                    <img 
+                    <Image 
                       key={member.id}
                       src={member.image}
                       alt={member.name}
-                      className="w-10 h-10 rounded-full border-2 border-white object-cover"
+                      width={40}
+                      height={40}
+                      className="rounded-full border-2 border-white object-cover"
                     />
                   ))}
                 </div>
@@ -169,10 +171,12 @@ const AboutSection = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               <div className="relative h-[500px] w-full rounded-2xl overflow-hidden shadow-2xl">
-                <img 
+                <Image 
                   src="https://images.unsplash.com/photo-1503220317375-aaad61436b1b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
                   alt="Travel experience"
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover rounded-xl"
+                  priority
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent"></div>
               </div>
@@ -237,10 +241,11 @@ const AboutSection = () => {
                 </p>
               </div>
               <div className="relative h-80 rounded-xl overflow-hidden shadow-lg">
-                <img 
+                <Image 
                   src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
                   alt="Our journey"
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover rounded-xl"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900/30 to-transparent"></div>
                 <div className="absolute bottom-0 left-0 p-6">
@@ -281,7 +286,7 @@ const AboutSection = () => {
             variants={staggerContainer}
             className="max-w-6xl mx-auto"
           >
-            <motion.div variants={fadeInUp} className="text-center mb-16">
+            <motion.div variants={fadeInUp} className="text-center mb-20">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 Our Core Values
               </h2>
@@ -333,7 +338,8 @@ const AboutSection = () => {
           </motion.div>
         </div>
       </section>
-         <section className="mt-20 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+
+      <section className="mt-20 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
         <h3 className="text-2xl font-semibold mb-8 text-gray-900">Our Certificates</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
           {[
@@ -366,7 +372,6 @@ const AboutSection = () => {
         </div>
       </section>
 
-      
       {/* B2B Suppliers Section */}
       <section className="py-28 bg-white">
         <div className="container mx-auto px-6">
@@ -399,9 +404,11 @@ const AboutSection = () => {
                 <div className="p-6">
                   <div className="flex items-center gap-4 mb-6">
                     <div className="w-16 h-16 rounded-lg bg-gray-100 flex items-center justify-center p-2">
-                      <img 
+                      <Image 
                         src={supplier.logo} 
                         alt={supplier.name}
+                        width={64}
+                        height={64}
                         className="w-full h-full object-contain"
                       />
                     </div>
@@ -442,8 +449,8 @@ const AboutSection = () => {
                 <div>
                   <h3 className="text-xl font-bold text-gray-900 mb-2">Become a Partner</h3>
                   <p className="text-gray-600">
-                    We're always looking to expand our network of trusted suppliers. If you provide 
-                    exceptional travel products or services, let's discuss partnership opportunities.
+                    We&apos;re always looking to expand our network of trusted suppliers. If you provide 
+                    exceptional travel products or services, let&apos;s discuss partnership opportunities.
                   </p>
                 </div>
               </div>
@@ -541,10 +548,11 @@ const AboutSection = () => {
                 className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow"
               >
                 <div className="relative h-48">
-                  <img 
+                  <Image 
                     src={member.image} 
                     alt={member.name}
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-gray-900/30 to-transparent"></div>
                 </div>
@@ -557,7 +565,6 @@ const AboutSection = () => {
           </motion.div>
         </div>
       </section>
-
 
       {/* Philosophy Section */}
       <section className="py-28 bg-gray-50">
@@ -585,15 +592,17 @@ const AboutSection = () => {
               
               <div className="relative z-10">
                 <blockquote className="text-2xl md:text-3xl font-medium text-gray-900 mb-8 leading-relaxed">
-                  "We believe travel at its finest is both an art and a science - a harmonious 
+                  &quot;We believe travel at its finest is both an art and a science - a harmonious 
                   blend of meticulous planning and serendipitous discovery that transforms 
-                  perspectives and enriches lives."
+                  perspectives and enriches lives.&quot;
                 </blockquote>
                 <div className="flex items-center justify-center gap-4">
                   <div className="w-12 h-12 rounded-full overflow-hidden">
-                    <img 
+                    <Image 
                       src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" 
                       alt="Team member"
+                      width={48}
+                      height={48}
                       className="w-full h-full object-cover"
                     />
                   </div>

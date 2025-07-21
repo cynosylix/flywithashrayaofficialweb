@@ -1,8 +1,7 @@
 'use client'
 import { useState, useRef } from 'react'
-import { motion, useTransform, useScroll, AnimatePresence, Transition } from 'framer-motion'
+import { motion, useTransform, useScroll, Transition } from 'framer-motion'
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock, FaBuilding, FaExternalLinkAlt } from 'react-icons/fa'
-import { IoIosGlobe } from 'react-icons/io'
 import { RiCustomerService2Fill } from 'react-icons/ri'
 import { Variants } from 'framer-motion'
 

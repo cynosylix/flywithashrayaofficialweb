@@ -1,12 +1,12 @@
 "use client";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { motion, useInView, AnimatePresence, easeInOut } from "framer-motion";
 import { useRef, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 const ServicesPage = () => {
   const [activeCategory, setActiveCategory] = useState(0);
-  const [hoveredService, setHoveredService] = useState(null);
+  const [hoveredService, setHoveredService] = useState<string | null>(null);
 
   const services = [
     {
@@ -62,7 +62,7 @@ const ServicesPage = () => {
       transition: {
         duration: 6,
         repeat: Infinity,
-        ease: "easeInOut"
+        ease: easeInOut
       }
     }
   };
@@ -74,7 +74,7 @@ const ServicesPage = () => {
       transition: {
         duration: 3,
         repeat: Infinity,
-        ease: "easeInOut"
+        ease: easeInOut
       }
     }
   };
@@ -296,14 +296,18 @@ const ServicesPage = () => {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="mb-16"
           >
-            <motion.h2
-              initial={{ opacity: 0 }}
-              animate={isCtaInView ? { opacity: 1 } : {}}
-              transition={{ delay: 0.2 }}
-              className="text-3xl md:text-4xl font-serif font-medium mb-8 leading-tight"
-            >
-              "Excellence in Every <span className="text-gradient bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">Journey</span>, Precision in Every <span className="text-gradient bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">Document</span>."
-            </motion.h2>
+           <motion.h2
+  initial={{ opacity: 0 }}
+  animate={isCtaInView ? { opacity: 1 } : {}}
+  transition={{ delay: 0.2 }}
+  className="text-3xl md:text-4xl font-serif font-medium mb-8 leading-tight"
+>
+  {`"Excellence in Every `}
+  <span className="text-gradient bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">Journey</span>
+  {`, Precision in Every `}
+  <span className="text-gradient bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">Document</span>
+  {`."`}
+</motion.h2>
             
             <motion.p
               initial={{ opacity: 0 }}

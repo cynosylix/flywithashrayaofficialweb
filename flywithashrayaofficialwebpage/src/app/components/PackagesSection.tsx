@@ -1,8 +1,11 @@
 "use client";
-import { motion, useAnimation, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { motion, useAnimation } from "framer-motion";
+import { useEffect, useState, useCallback } from "react";
 import { Package } from "../types/common";
 import Link from "next/link";
+import { 
+  containerVariants, cardVariants, imageHoverVariants, badgeVariants,
+} from '../animationVariants';
 
 const packages: Package[] = [
   {
@@ -52,76 +55,11 @@ const packages: Package[] = [
   }
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-      ease: [0.16, 1, 0.3, 1],
-      duration: 1
-    }
-  }
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 60, rotateY: 15 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    rotateY: 0,
-    transition: {
-      ease: [0.16, 1, 0.3, 1],
-      duration: 0.8
-    }
-  },
-  hover: {
-    y: -15,
-    boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
-    transition: {
-      duration: 0.4,
-      ease: "easeOut"
-    }
-  }
-};
-
-const imageHoverVariants = {
-  hover: {
-    scale: 1.1,
-    transition: {
-      duration: 1.2,
-      ease: [0.22, 1, 0.36, 1]
-    }
-  }
-};
-
-const badgeVariants = {
-  hover: {
-    rotate: [0, -5, 5, 0],
-    transition: {
-      duration: 0.6
-    }
-  }
-};
-
 const PackagesSection = () => {
   const [activePackage, setActivePackage] = useState<number | null>(null);
   const controls = useAnimation();
 
-  // Auto-rotate feature
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActivePackage(prev => {
-        const next = prev === null ? 0 : (prev + 1) % packages.length;
-        highlightPackage(next);
-        return next;
-      });
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  const highlightPackage = async (index: number) => {
+  const highlightPackage = useCallback(async (index: number) => {
     await controls.start({
       scale: 1,
       transition: { duration: 0.3 }
@@ -138,7 +76,20 @@ const PackagesSection = () => {
       scale: 1,
       transition: { duration: 0.3 }
     });
-  };
+  }, [controls]);
+
+  // Auto-rotate feature
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActivePackage(prev => {
+        const next = prev === null ? 0 : (prev + 1) % packages.length;
+        highlightPackage(next);
+        return next;
+      });
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [highlightPackage]);
 
   return (
     <section id="packages" className="py-28 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
@@ -199,12 +150,13 @@ const PackagesSection = () => {
                 />
                 {pkg.badge && (
                   <motion.div
-                    className={`absolute top-6 right-6 px-4 py-1.5 rounded-full text-sm font-bold shadow-lg z-20 ${pkg.badge === "Popular"
+                    className={`absolute top-6 right-6 px-4 py-1.5 rounded-full text-sm font-bold shadow-lg z-20 ${
+                      pkg.badge === "Popular"
                         ? "bg-gradient-to-r from-amber-400 to-amber-500 text-gray-900"
                         : pkg.badge === "Best Seller"
                           ? "bg-gradient-to-r from-emerald-500 to-emerald-600 text-white"
                           : "bg-gradient-to-r from-rose-500 to-pink-600 text-white"
-                      }`}
+                    }`}
                     variants={badgeVariants}
                   >
                     {pkg.badge}
