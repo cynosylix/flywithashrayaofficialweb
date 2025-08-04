@@ -247,8 +247,8 @@ const ServicesPage = () => {
             className="grid grid-cols-2 md:grid-cols-4 gap-8"
           >
             {[
-              { number: "10K+", label: "Happy Clients" },
-              { number: "25+", label: "Years Experience" },
+              { number: "1K+", label: "Happy Clients" },
+              { number: "4+", label: "Years Experience" },
               { number: "50+", label: "Global Partners" },
               { number: "99%", label: "Satisfaction Rate" }
             ].map((stat, index) => (

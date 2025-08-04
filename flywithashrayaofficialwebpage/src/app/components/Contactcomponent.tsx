@@ -44,27 +44,27 @@ const locations = [
     id: 1,
     title: "Head Office",
     address: "Velikkakathu Building Kalachanda Jn., NH 183 Behind Federal Bank ATM Pampady, Kottayam, Kerala, India",
-    phones: "+91 12345 67890\n+91 98765 43210",
-    email: "flywithashraya@gmail.com",
-    hours: "Mon-Fri: 9AM - 6PM | Sat: 9AM - 1PM",
+    phones: "+91 9400416016\n+91 9496416016",
+    email: "info@flywithashraya.com",
+    hours: "Mon-Sat: 9AM - 6PM",
     mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3928.7151!2d76.6789!3d9.8765!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b062d8007486355%3A0x2d4e5e190382302d!2sFly%20With%20Ashraya!5e0!3m2!1sen!2sin!4v1234567890123!5m2!1sen!2sin"
   },
   {
     id: 2,
     title: "Branch Office 1",
     address: "Kunnumpurathu Building, Opposite South Indian Bank, NH 183, Mundakayam, Kottayam, Kerala, India",
-    phones: "+91 12345 67890\n+91 98765 43210",
-    email: "flywithashraya@gmail.com",
-    hours: "Mon-Fri: 8AM - 5PM | Sat: 8AM - 12PM",
+    phones: "+91 9400916016\n+91 97787 53870",
+    email: "info@flywithashraya.com",
+    hours: "Mon-Sat: 8AM - 5PM",
     mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d621017.9568261022!2d76.882247!3d9.539637!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b0649c01c1563d3%3A0x1008ca93944fdba0!2sFly%20With%20Ashraya!5e0!3m2!1sen!2sus!4v1752842367919!5m2!1sen!2sus"
   },
   {
     id: 3,
     title: "International Branch",
     address: "Building 81, Opposite Police Station, Tea Spot Building, Street 3, Jleeb Al-Shuyoukh, Kuwait",
-    phones: "+91 12345 67890\n+91 98765 43210",
-    email: "flywithashraya@gmail.com",
-    hours: "Sun-Thu: 8AM - 4PM",
+    phones: "+965 69680820\n+965 97341915",
+    email: "info@flywithashraya.com\n nikhil@flywithashraya.com",
+    hours: "Time (Online only)",
     mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d549398.062775777!2d47.935125!3d29.256636!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fcf9914e19893c9%3A0x52c6ebdf0f3f6c3d!2sJleeb%20Al%20shuyoukh!5e0!3m2!1sen!2sus!4v1752842590769!5m2!1sen!2sus"
   }
 ]

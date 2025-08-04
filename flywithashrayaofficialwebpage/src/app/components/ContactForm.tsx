@@ -71,7 +71,7 @@ const ContactForm = () => {
               <div className="space-y-4">
                 <p className="text-white/80">Prefer direct communication?</p>
                 <button className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/20 rounded-lg text-white hover:bg-white/10 transition-all">
-                  <IoIosMail /> support@yourdomain.com
+                  <IoIosMail /> info@flywithashraya.com
                 </button>
               </div>
             </div>

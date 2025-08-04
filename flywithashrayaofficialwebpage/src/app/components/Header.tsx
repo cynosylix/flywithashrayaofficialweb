@@ -29,7 +29,7 @@ const Header = () => {
     { href: "/#specials", text: "Special Fares" },
     { href: "/#testimonials", text: "Reviews" },
     { href: "/gallery", text: "Gallery" },
-    { href: "/contact", text: "Contact" }
+    { href: "/Contact", text: "Contact" }
   ];
 
   // Removed unused variables contactPhones, contactEmails, contactWebsite, socialLinks
