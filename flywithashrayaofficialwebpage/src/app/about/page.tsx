@@ -370,8 +370,9 @@ const AboutSection = () => {
             { name: "GST Registration Certificate", file: "/GST REGISTRATION CERTIFICATE.pdf" },
             { name: "IRCTC Certificate", file: "/IRCTC CERTIFICATE.pdf" },
             { name: "Udyam Registration Certificate", file: "/Udyam Registration Certificate UPDATED.pdf" },
-            { name: "Aadhar Card", file: "/NIKHIL ADHAR.pdf" },
-            { name: "PAN Card", file: "/NIKHL PANCARD.pdf" }
+            { name: "Shop and Establishment Certificate", file: "/PAMPADY_PANCHAYATH_LICENCE_2025-2026.pdf" },
+            { name: "Task Membership Certificate ", file: "/TASK_CERTIFICATE_2025-2026.jpg" },
+            
           ].map((cert, index) => (
             <a
               key={index}
