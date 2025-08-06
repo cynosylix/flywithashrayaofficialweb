@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { FaFacebook, FaTwitter, FaInstagram, FaPinterest, FaPaperPlane } from "react-icons/fa";
+import { FaFacebook, FaTwitter, FaInstagram, FaPinterest, FaPaperPlane, FaYoutube } from "react-icons/fa";
+import { FaLinkedinIn } from "react-icons/fa6";
 import { IoIosMail, IoIosGlobe } from "react-icons/io";
 
 const ContactForm = () => {
@@ -55,17 +56,20 @@ const ContactForm = () => {
             </h3>
             <div className="space-y-6">
               <div className="flex gap-4">
-                <a href="#" className="p-3 bg-white/10 rounded-full hover:bg-white/20 transition-all">
+                <a href="https://www.facebook.com/flywithashraya" className="p-3 bg-white/10 rounded-full hover:bg-white/20 transition-all">
                   <FaFacebook className="text-blue-400 text-xl" />
                 </a>
-                <a href="#" className="p-3 bg-white/10 rounded-full hover:bg-white/20 transition-all">
+                <a href="https://twitter.com/flywithashraya" className="p-3 bg-white/10 rounded-full hover:bg-white/20 transition-all">
                   <FaTwitter className="text-sky-300 text-xl" />
                 </a>
-                <a href="#" className="p-3 bg-white/10 rounded-full hover:bg-white/20 transition-all">
+                <a href="https://www.instagram.com/flywithashraya.in/" className="p-3 bg-white/10 rounded-full hover:bg-white/20 transition-all">
                   <FaInstagram className="text-pink-400 text-xl" />
                 </a>
-                <a href="#" className="p-3 bg-white/10 rounded-full hover:bg-white/20 transition-all">
-                  <FaPinterest className="text-red-400 text-xl" />
+                <a href="https://www.linkedin.com/in/fly-with-ashraya-ashraya-digital-b21891259" className="p-3 bg-white/10 rounded-full hover:bg-white/20 transition-all">
+                  <FaLinkedinIn className="text-blue-400 text-xl" />
+                </a>
+                <a href="https://www.youtube.com/@flywithashraya" className="p-3 bg-white/10 rounded-full hover:bg-white/20 transition-all">
+                  <FaYoutube className="text-red-400 text-xl" />
                 </a>
               </div>
               <div className="space-y-4">

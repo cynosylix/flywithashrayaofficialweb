@@ -12,7 +12,8 @@ const testimonials: Testimonial[] = [
     author: "Sarah Johnson",
     role: "European Honeymoon",
     rating: 5,
-    image: "https://randomuser.me/api/portraits/women/32.jpg"
+    image: "https://randomuser.me/api/portraits/women/32.jpg",
+    location: undefined
   },
   {
     id: 2,
@@ -20,7 +21,8 @@ const testimonials: Testimonial[] = [
     author: "Michael Chen",
     role: "Family Trip to Japan",
     rating: 5,
-    image: "https://randomuser.me/api/portraits/men/45.jpg"
+    image: "https://randomuser.me/api/portraits/men/45.jpg",
+    location: undefined
   },
   {
     id: 3,
@@ -28,7 +30,8 @@ const testimonials: Testimonial[] = [
     author: "Emily Rodriguez",
     role: "Solo Adventure in Bali",
     rating: 4.5,
-    image: "https://randomuser.me/api/portraits/women/68.jpg"
+    image: "https://randomuser.me/api/portraits/women/68.jpg",
+    location: undefined
   },
   {
     id: 4,
@@ -36,7 +39,8 @@ const testimonials: Testimonial[] = [
     author: "David Wilson",
     role: "African Safari",
     rating: 5,
-    image: "https://randomuser.me/api/portraits/men/22.jpg"
+    image: "https://randomuser.me/api/portraits/men/22.jpg",
+    location: undefined
   },
   {
     id: 5,
@@ -44,7 +48,8 @@ const testimonials: Testimonial[] = [
     author: "Priya Patel",
     role: "Southeast Asia Tour",
     rating: 5,
-    image: "https://randomuser.me/api/portraits/women/44.jpg"
+    image: "https://randomuser.me/api/portraits/women/44.jpg",
+    location: undefined
   }
 ];
 
@@ -56,59 +61,72 @@ const quoteVariants = {
     }
   }
 };
-
 const TestimonialsSection = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const controls = useAnimation();
 
+  // Initialize animations after mount
   useEffect(() => {
     setIsMounted(true);
-  }, []);
+    controls.start({ x: 0, opacity: 1 }); // Initial state
+  }, [controls]);
 
   const handleNext = useCallback(async () => {
     if (isAnimating || !isMounted) return;
+    
     setIsAnimating(true);
     
-    await controls.start({
-      x: 100,
-      opacity: 0,
-      transition: { duration: 0.4 }
-    });
-    
-    setActiveIndex(prev => (prev + 1) % testimonials.length);
-    
-    controls.set({ x: -100, opacity: 0 });
-    await controls.start({
-      x: 0,
-      opacity: 1,
-      transition: { duration: 0.6 }
-    });
-    
-    setIsAnimating(false);
+    try {
+      // Exit animation
+      await controls.start({
+        x: 100,
+        opacity: 0,
+        transition: { duration: 0.4 }
+      });
+      
+      // Update index
+      setActiveIndex(prev => (prev + 1) % testimonials.length);
+      
+      // Reset position and enter animation
+      controls.set({ x: -100, opacity: 0 });
+      await controls.start({
+        x: 0,
+        opacity: 1,
+        transition: { duration: 0.6 }
+      });
+    } finally {
+      setIsAnimating(false);
+    }
   }, [controls, isAnimating, isMounted]);
 
   const handlePrev = useCallback(async () => {
     if (isAnimating || !isMounted) return;
+    
     setIsAnimating(true);
     
-    await controls.start({
-      x: -100,
-      opacity: 0,
-      transition: { duration: 0.4 }
-    });
-    
-    setActiveIndex(prev => (prev - 1 + testimonials.length) % testimonials.length);
-    
-    controls.set({ x: 100, opacity: 0 });
-    await controls.start({
-      x: 0,
-      opacity: 1,
-      transition: { duration: 0.6 }
-    });
-    
-    setIsAnimating(false);
+    try {
+      // Exit animation
+      await controls.start({
+        x: -100,
+        opacity: 0,
+        transition: { duration: 0.4 }
+      });
+      
+      // Update index
+      setActiveIndex(prev => (prev - 1 + testimonials.length) % testimonials.length);
+      
+      // Reset position and enter animation
+      controls.set({ x: 100, opacity: 0 });
+      await controls.start({
+        x: 0,
+        opacity: 1,
+        transition: { duration: 0.6 }
+      });
+    } finally {
+      setIsAnimating(false);
+    }
   }, [controls, isAnimating, isMounted]);
 
   // Auto-rotate testimonials
@@ -122,6 +140,7 @@ const TestimonialsSection = () => {
     return () => clearInterval(interval);
   }, [isMounted, isAnimating, handleNext]);
 
+  // ... rest of your component remains the same
   if (!isMounted) {
     return (
       <section id="testimonials" className="py-28 bg-gray-900 text-white relative overflow-hidden">

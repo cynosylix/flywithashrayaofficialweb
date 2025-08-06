@@ -1,54 +1,16 @@
 "use client";
 import { motion, useInView, AnimatePresence, easeInOut } from "framer-motion";
 import { useRef, useState } from "react";
+import Link from "next/link";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+
+// Import your service data (create a separate servicesData.ts file)
+import { services, Service, ServiceCategory } from "../servicesData";
 
 const ServicesPage = () => {
   const [activeCategory, setActiveCategory] = useState(0);
   const [hoveredService, setHoveredService] = useState<string | null>(null);
-
-  const services = [
-    {
-      category: "Travel Services",
-      items: [
-        { name: "Flight Ticket", icon: "✈️", description: "Global flight bookings with competitive pricing and flexible options." },
-        { name: "Bus Ticket", icon: "🚌", description: "Comfortable bus travel arrangements across all major routes." },
-        { name: "Train Ticket", icon: "🚆", description: "Seamless rail travel solutions with premium booking options." },
-        { name: "Holiday Package", icon: "🏖️", description: "Tailored vacation packages for unforgettable experiences." },
-        { name: "Cruise Service", icon: "🛳️", description: "Luxury cruise bookings with exclusive onboard amenities." },
-        { name: "Hotel Booking", icon: "🏨", description: "Premium accommodations at the best available rates worldwide." },
-        { name: "Car Rental Service", icon: "🚗", description: "Flexible vehicle rentals with comprehensive insurance options." }
-      ]
-    },
-    {
-      category: "Document Services",
-      items: [
-        { name: "Attestation Service", icon: "📑", description: "Official document authentication for legal purposes." },
-        { name: "Immigration Service", icon: "🛂", description: "Expert guidance on immigration procedures and requirements." },
-        { name: "Visiting Visa Service", icon: "🛃", description: "Streamlined visa processing for short-term visits." },
-        { name: "Passport Service", icon: "📘", description: "Assistance with passport applications and renewals." },
-        { name: "Pan Card Service", icon: "💳", description: "Quick and reliable PAN card processing services." }
-      ]
-    },
-    {
-      category: "Insurance Services",
-      items: [
-        { name: "Car Insurance", icon: "🚘", description: "Comprehensive coverage plans for your vehicles." },
-        { name: "Travel Insurance", icon: "🧳", description: "Protection for your journeys with extensive coverage." },
-        { name: "Health Service", icon: "🏥", description: "Health insurance solutions for individuals and families." }
-      ]
-    },
-    {
-      category: "Other Services",
-      items: [
-        { name: "Village Service", icon: "🌄", description: "Specialized services for rural community needs." },
-        { name: "Panchayat Services", icon: "🏛️", description: "Support for local governance documentation." },
-        { name: "School and College Service", icon: "🎓", description: "Educational documentation and certification services." },
-        { name: "Printing Service", icon: "🖨️", description: "High-quality professional printing solutions." }
-      ]
-    }
-  ];
 
   const ctaRef = useRef(null);
   const heroRef = useRef(null);
@@ -163,7 +125,7 @@ const ServicesPage = () => {
       <div className="max-w-7xl mx-auto px-6 relative z-10 mt-7">
         <div className="flex overflow-x-auto pb-2 scrollbar-hide">
           <div className="flex space-x-2">
-            {services.map((category, index) => (
+            {services.map((category: ServiceCategory, index: number) => (
               <motion.button
                 key={category.category}
                 onClick={() => setActiveCategory(index)}
@@ -193,44 +155,48 @@ const ServicesPage = () => {
             transition={{ duration: 0.4, ease: "easeInOut" }}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
           >
-            {services[activeCategory].items.map((service, idx) => (
-              <motion.div
-                key={service.name}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: idx * 0.05, ease: "backOut" }}
-                whileHover={{ y: -10 }}
-                onHoverStart={() => setHoveredService(service.name)}
-                onHoverEnd={() => setHoveredService(null)}
-                className="relative group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden border border-gray-100"
+            {services[activeCategory].items.map((service: Service, idx: number) => (
+              <Link 
+                key={service.slug} 
+                href={`/services_details/${service.slug}`}
+                passHref
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-white/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="relative z-10 p-8 h-full flex flex-col">
-                  <div className="text-5xl mb-6 transition-all duration-500 group-hover:scale-110 group-hover:text-blue-600">
-                    {service.icon}
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: idx * 0.05, ease: "backOut" }}
+                  whileHover={{ y: -10 }}
+                  onHoverStart={() => setHoveredService(service.name)}
+                  onHoverEnd={() => setHoveredService(null)}
+                  className="relative group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden border border-gray-100 cursor-pointer"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-white/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="relative z-10 p-8 h-full flex flex-col">
+                    <div className="text-5xl mb-6 transition-all duration-500 group-hover:scale-110 group-hover:text-blue-600">
+                      {service.icon}
+                    </div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-3">{service.name}</h3>
+                    <p className="text-gray-600 mb-6 text-sm leading-relaxed">{service.description}</p>
+                    <div className="mt-auto">
+                      <div className="px-4 py-2 text-sm font-medium text-blue-600 hover:text-white rounded-md bg-white hover:bg-blue-600 border border-blue-600 hover:border-blue-600 transition-all duration-300 group-hover:shadow-md inline-flex items-center">
+                        View Details
+                        <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">→</span>
+                      </div>
+                    </div>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">{service.name}</h3>
-                  <p className="text-gray-600 mb-6 text-sm leading-relaxed">{service.description}</p>
-                  <div className="mt-auto">
-                    <button className="px-4 py-2 text-sm font-medium text-blue-600 hover:text-white rounded-md bg-white hover:bg-blue-600 border border-blue-600 hover:border-blue-600 transition-all duration-300 group-hover:shadow-md">
-                      View Details
-                      <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">→</span>
-                    </button>
-                  </div>
-                </div>
-                
-                {/* Hover effect */}
-                {hoveredService === service.name && (
-                  <motion.div 
-                    layoutId="serviceHover"
-                    className="absolute inset-0 border-2 border-blue-400 rounded-xl pointer-events-none"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                )}
-              </motion.div>
+                  
+                  {hoveredService === service.name && (
+                    <motion.div 
+                      layoutId="serviceHover"
+                      className="absolute inset-0 border-2 border-blue-400 rounded-xl pointer-events-none"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  )}
+                </motion.div>
+              </Link>
             ))}
           </motion.div>
         </AnimatePresence>
@@ -296,31 +262,31 @@ const ServicesPage = () => {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="mb-16"
           >
-           <motion.h2
-  initial={{ opacity: 0 }}
-  animate={isCtaInView ? { opacity: 1 } : {}}
-  transition={{ delay: 0.2 }}
-  className="text-3xl md:text-4xl font-serif font-medium mb-8 leading-tight"
->
-  {`"Excellence in Every `}
-  <span className="text-gradient bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">Journey</span>
-  {`, Precision in Every `}
-  <span className="text-gradient bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">Document</span>
-  {`."`}
-</motion.h2>
+            <motion.h2
+              initial={{ opacity: 0 }}
+              animate={isCtaInView ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-3xl md:text-4xl font-serif font-medium mb-8 leading-tight"
+            >
+              <span>Excellence in Every </span>
+              <span className="text-gradient bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">Journey</span>
+              <span>, Precision in Every </span>
+              <span className="text-gradient bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">Document</span>
+              <span>.</span>
+            </motion.h2>
             
             <motion.p
               initial={{ opacity: 0 }}
-              animate={isCtaInView ? { opacity: 1 } : {}}
+              animate={isCtaInView ? { opacity: 1 } : { opacity: 0 }}
               transition={{ delay: 0.4 }}
               className="text-lg text-gray-600 mb-10 max-w-3xl mx-auto"
             >
-              Partner with us for seamless travel experiences and meticulous documentation services tailored to your needs.
+              Seamless travel experiences and meticulous documentation services tailored to your unique needs.
             </motion.p>
             
             <motion.div
               initial={{ opacity: 0 }}
-              animate={isCtaInView ? { opacity: 1 } : {}}
+              animate={isCtaInView ? { opacity: 1 } : { opacity: 0 }}
               transition={{ delay: 0.6 }}
               className="flex flex-col sm:flex-row justify-center gap-4"
             >
