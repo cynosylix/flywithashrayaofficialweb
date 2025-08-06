@@ -31,7 +31,13 @@ export interface Special {
 }
 
 export interface Testimonial {
-  location: LatLng | LatLngLiteral;
+  location?: {
+    lat: number;
+    lng: number;
+  } | {
+    lat: number;
+    lng: number;
+  };
   id: number;
   content: string;
   author: string;

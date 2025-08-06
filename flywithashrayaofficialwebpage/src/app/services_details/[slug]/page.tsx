@@ -1,13 +1,14 @@
 import { notFound } from "next/navigation";
-import { services, ServiceCategory, Service } from "../../servicesData";
+import { services, Service } from "../../servicesData";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Link from "next/link";
 
 interface ServiceDetailPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 // Server-side function to generate static params for static export
@@ -26,11 +27,13 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
+export default async function ServiceDetailPage({ params }: ServiceDetailPageProps) {
+  const resolvedParams = await params;
+  
   // Find the service across all categories
   let service = null;
   for (const category of services) {
-    const foundService = category.items.find(item => item.slug === params.slug);
+    const foundService = category.items.find(item => item.slug === resolvedParams.slug);
     if (foundService) {
       service = foundService;
       break;
