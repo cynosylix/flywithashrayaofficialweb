@@ -40,12 +40,7 @@ const AboutSection = () => {
       role: "Customer Relationship Manager",
       image: "/team/Saranyamol.png"
     },
-    {
-      id: 4,
-      name: "Karolin Thomas",
-      role: "Travel COnsultant Visa",
-      image: "/team/Karolin-Thomas.png"
-    },
+    
     
     {
       id: 6,
@@ -537,7 +532,7 @@ href={cert.file}
         </div>
       </section>
 
-     {/* Team Section */}
+ {/* Team Section */}
 <section className="py-28 bg-white">
   <div className="container mx-auto px-6">
     <motion.div
@@ -557,46 +552,28 @@ href={cert.file}
 
     <motion.div
       variants={staggerContainer}
-      className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 max-w-7xl mx-auto"
+      className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-7xl mx-auto"
     >
       {teamMembers.map((member) => (
         <motion.div
           key={member.id}
           variants={fadeInUp}
-          whileHover={{ y: -10 }}
-          className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500"
+          whileHover={{ y: -5 }}
+          className="group relative overflow-hidden rounded-xl shadow-md hover:shadow-lg transition-all duration-300"
         >
-          <div className="relative h-72 w-full">
+          <div className="relative h-60 w-full">
             <Image
               src={member.image}
               alt={member.name}
               fill
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              className="object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-gray-900/70 via-gray-900/30 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-gray-900/50 via-gray-900/20 to-transparent" />
           </div>
           
-          <div className="absolute bottom-0 left-0 w-full p-6 text-white transition-all duration-500 transform translate-y-0 group-hover:translate-y-[-10px]">
-            <div className="mb-2">
-              <h3 className="text-xl font-bold">{member.name}</h3>
-              <p className="text-blue-200">{member.role}</p>
-            </div>
-            
-            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <div className="flex space-x-2">
-                <a href="#" className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors">
-                  <FiLinkedin className="w-4 h-4" />
-                </a>
-                <a href="#" className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors">
-                  <FiMail className="w-4 h-4" />
-                </a>
-              </div>
-            </div>
-          </div>
-          
-          {/* Decorative element */}
-          <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-blue-600/20 backdrop-blur-sm flex items-center justify-center">
-            <FiAward className="w-5 h-5 text-white" />
+          <div className="absolute bottom-0 left-0 w-full p-4 text-white">
+            <h3 className="text-lg font-bold">{member.name}</h3>
+            <p className="text-sm text-blue-200">{member.role}</p>
           </div>
         </motion.div>
       ))}
@@ -631,7 +608,6 @@ href={cert.file}
     </motion.div>
   </div>
 </section>
-
 
 
 

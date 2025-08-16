@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle, } from "react-feather";
-import { usePackages } from '../hooks/usePackages';
 import Link from "next/link";
 
 const DynamicPackagesSection = () => {
@@ -154,7 +153,7 @@ const DynamicPackagesSection = () => {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    <Link href="/contact">
+                    <Link href="/Contact">
                       <span className="relative z-10 flex items-center justify-center gap-2">
                         Book This Package
                         <ArrowRight className="w-5 h-5" />
