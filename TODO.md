@@ -1,31 +1,31 @@
-# Fix "Failed to fetch packages" Console Error - TODO List
+# SpecialFares UI Display Fix - TODO
 
-## Phase 1: Enhanced Frontend Error Handling
-- [ ] Add comprehensive error handling in admin dashboard
-- [ ] Implement retry mechanism for failed requests
-- [ ] Add loading states and proper error boundaries
-- [ ] Add user-friendly error messages
+## Phase 1: Debug and Identify Root Cause
+- [ ] Add console logging for data verification
+- [ ] Check animation states in browser dev tools
+- [ ] Verify z-index stacking context
+- [ ] Test on different screen sizes
 
-## Phase 2: Backend Debugging & Logging
-- [ ] Add detailed logging to packages API route
-- [ ] Verify database connection stability
-- [ ] Add request validation and sanitization
-- [ ] Implement proper error responses
+## Phase 2: Fix Animation Issues
+- [ ] Simplify cardVariants temporarily
+- [ ] Remove 3D transforms (rotateY, perspective)
+- [ ] Fix background element z-index
+- [ ] Adjust overflow properties
 
-## Phase 3: Network Resilience
-- [ ] Add request timeout handling
-- [ ] Implement proper CORS configuration
-- [ ] Add request/response interceptors
-- [ ] Add network connectivity checks
+## Phase 3: Data Display Fixes
+- [ ] Add null checks for data properties
+- [ ] Handle missing images gracefully
+- [ ] Fix price calculation edge cases
+- [ ] Add proper loading states
 
-## Phase 4: Authentication & Security
-- [ ] Verify admin authentication configuration
-- [ ] Add proper authorization checks
-- [ ] Implement token expiration handling
-- [ ] Add rate limiting
+## Phase 4: UI Enhancements
+- [ ] Implement responsive grid
+- [ ] Add proper error boundaries
+- [ ] Enhance accessibility attributes
+- [ ] Optimize image loading
 
-## Phase 5: Testing & Monitoring
-- [ ] Add automated tests for package fetching
-- [ ] Implement error monitoring
-- [ ] Add performance monitoring
-- [ ] Create test cases for edge scenarios
+## Phase 5: Testing and Validation
+- [ ] Test with empty data array
+- [ ] Test with malformed data
+- [ ] Test responsive behavior
+- [ ] Cross-browser testing

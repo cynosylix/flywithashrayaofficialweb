@@ -2,8 +2,9 @@
 import { motion, useAnimation } from "framer-motion";
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
-import { ArrowRight, CheckCircle, MapPin, Clock } from "react-feather";
-import { Plane } from "lucide-react";
+import { ArrowRight, MapPin, Clock } from "react-feather";
+
+import Image from "next/image";
 
 interface Package {
   _id: string;
@@ -13,6 +14,9 @@ interface Package {
   duration: string;
   destinations: string[];
   images: string[];
+  rating?: number;
+  reviews?: number;
+  tags?: string[];
 }
 
 const PackagesSection = () => {
@@ -20,19 +24,36 @@ const PackagesSection = () => {
   const [packages, setPackages] = useState<Package[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortOption, setSortOption] = useState("recommended");
   const controls = useAnimation();
 
   useEffect(() => {
     const fetchPackages = async () => {
       try {
         const response = await fetch('/api/admin/packages/?isActive=true');
-        
+
         if (!response.ok) {
           throw new Error(`Failed to load packages (status: ${response.status})`);
         }
-        
+
         const data = await response.json();
-        setPackages(data.packages || data);
+
+        // Handle different possible response structures
+        let packagesArray = [];
+        if (Array.isArray(data)) {
+          packagesArray = data;
+        } else if (Array.isArray(data.packages)) {
+          packagesArray = data.packages;
+        } else if (Array.isArray(data.data)) {
+          packagesArray = data.data;
+        }
+
+        if (!Array.isArray(packagesArray)) {
+          throw new Error("Invalid packages data format received from API");
+        }
+
+        setPackages(packagesArray);
       } catch (error) {
         setError(error instanceof Error ? error.message : "Failed to load packages");
       } finally {
@@ -62,6 +83,24 @@ const PackagesSection = () => {
     });
   }, [controls]);
 
+  const filteredPackages = packages.filter(pkg => {
+    const matchesSearch = searchTerm === "" ||
+      pkg.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      pkg.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      pkg.destinations.some(d => d.toLowerCase().includes(searchTerm.toLowerCase()));
+
+    return matchesSearch;
+  });
+
+  const sortedPackages = [...filteredPackages].sort((a, b) => {
+    switch (sortOption) {
+      case 'price-low': return a.price - b.price;
+      case 'price-high': return b.price - a.price;
+      case 'duration': return a.duration.localeCompare(b.duration);
+      default: return 0;
+    }
+  });
+
   if (loading) {
     return (
       <section id="packages" className="py-20 bg-gray-50">
@@ -86,7 +125,7 @@ const PackagesSection = () => {
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h2 className="text-2xl font-bold text-red-600 mb-4">Error Loading Packages</h2>
           <p className="text-gray-600 mb-4">{error}</p>
-          <button 
+          <button
             onClick={() => window.location.reload()}
             className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
           >
@@ -109,9 +148,11 @@ const PackagesSection = () => {
           </p>
         </div>
 
-        {packages.length > 0 ? (
+
+
+        {sortedPackages.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {packages.map((pkg, index) => (
+            {sortedPackages.map((pkg, index) => (
               <motion.div
                 key={pkg._id}
                 className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow"
@@ -121,10 +162,12 @@ const PackagesSection = () => {
                 whileHover={{ scale: 1.02 }}
               >
                 <div className="h-48 relative">
-                  <img
+                  <Image
                     src={pkg.images?.[0] || "/placeholder-image.jpg"}
                     alt={pkg.name}
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 </div>
 
@@ -152,7 +195,20 @@ const PackagesSection = () => {
                     </div>
                   </div>
 
-                  <Link 
+                  {pkg.rating && (
+                    <div className="flex items-center mb-4">
+                      {[...Array(5)].map((_, i) => (
+                        <span key={i} className="text-yellow-500">
+                          {i < (pkg.rating || 0) ? '★' : '☆'}
+                        </span>
+                      ))}
+                      <span className="text-sm text-gray-600 ml-1">
+                        ({pkg.reviews || 0} reviews)
+                      </span>
+                    </div>
+                  )}
+
+                  <Link
                     href={`/packages/${pkg._id}`}
                     className="w-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-medium transition-colors"
                   >
@@ -165,12 +221,12 @@ const PackagesSection = () => {
           </div>
         ) : (
           <div className="text-center py-12">
-            <p className="text-gray-600">No packages available at the moment.</p>
+            <p className="text-gray-600">No packages match your search criteria.</p>
           </div>
         )}
 
         <div className="text-center mt-12">
-          <Link 
+          <Link
             href="/packages"
             className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium"
           >

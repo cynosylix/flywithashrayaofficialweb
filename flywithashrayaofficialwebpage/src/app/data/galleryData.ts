@@ -1,5 +1,4 @@
-import { GallerySection } from '../types/gallery';
-
+import { GallerySection, GalleryImage } from '@/app/types/gallery';
 export const gallerySections: GallerySection[] = [
   {
     id: 'mundakayam',
