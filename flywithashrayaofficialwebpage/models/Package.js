@@ -23,11 +23,9 @@ const packageSchema = new mongoose.Schema({
     destinations: [{ 
         type: String, 
         required: true,
-        default: ["Baku"] 
     }],
     departureCities: [{ 
         type: String,
-        default: ["Ernakulam", "Kottayam", "Cochin"] 
     }],
     
     // Package-specific fields
@@ -131,21 +129,13 @@ const packageSchema = new mongoose.Schema({
     // Package metadata
     market: {
         type: String,
-        default: "Indian Nationals Only"
     },
     tags: [{ 
         type: String,
-        default: ["Azerbaijan", "Baku", "Shahdag", "Gabala", "Cultural Tour"] 
     }],
     highlights: [{ 
         type: String,
-        default: [
-            "Baku Old City (UNESCO Site)",
-            "Shahdag Mountain Resort",
-            "Gobustan National Park",
-            "Mud Volcanoes",
-            "Gabala Waterfalls"
-        ]
+        
     }],
     
     // Booking details

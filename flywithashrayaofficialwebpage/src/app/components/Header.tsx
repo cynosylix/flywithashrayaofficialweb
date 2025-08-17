@@ -83,7 +83,7 @@ const Header = () => {
                   className="w-full h-auto object-contain object-left"
                   priority
                   style={{
-                    width: '100%', // Fill container width
+                    width: '95%', // Fill container width
                     height: 'auto', // Maintain aspect ratio
                   }}
                 />

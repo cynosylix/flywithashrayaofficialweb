@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { FiGlobe, FiHeart, FiShield, FiAward, FiMapPin, FiTarget, FiEye, FiBriefcase, FiLinkedin, FiMail } from 'react-icons/fi';
+import { FiGlobe, FiHeart, FiShield, FiAward, FiMapPin, FiTarget, FiEye } from 'react-icons/fi';
 
 const AboutSection = () => {
   // Animation variants

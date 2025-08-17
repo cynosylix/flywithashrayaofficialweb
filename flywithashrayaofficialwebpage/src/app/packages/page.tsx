@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle, Users, Heart, Home, Globe, Star, Shield, MapPin, Calendar, Clock, } from "react-feather";
+import { ArrowRight, CheckCircle, Users, Heart, Home, Globe, Star, Shield, MapPin,  Clock, } from "react-feather";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useEffect, useState } from "react";

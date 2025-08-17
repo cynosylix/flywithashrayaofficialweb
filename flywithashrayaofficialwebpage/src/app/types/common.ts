@@ -12,13 +12,54 @@ export interface Destination {
 }
 
 export interface Package {
-  id: number;
-  title: string;
+  _id?: string;
+  id?: number;
+  name: string;
+  title?: string;
   description: string;
-  price: string;
+  price: number;
   duration: string;
-  features: string[];
-  image: string;
+  features?: string[];
+  destinations?: string[];
+  departureCities?: string[];
+  packageType?: string;
+  accommodation?: {
+    type: string;
+    name: string;
+    rating: number;
+    roomType: string;
+    occupancy: string;
+  };
+  inclusions?: string[];
+  exclusions?: string[];
+  itinerary?: Array<{
+    title: string;
+    description: string;
+    overnight: string;
+    attractions: string[];
+  }>;
+  flights?: {
+    onward: {
+      airline: string;
+      departure: string;
+      departureAirport: string;
+    };
+    return: {
+      airline: string;
+      departure: string;
+      departureAirport: string;
+    };
+  };
+  images?: string[];
+  thumbnail?: string;
+  market?: string;
+  tags?: string[];
+  highlights?: string[];
+  isActive: boolean;
+  isFeatured?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+  image?: string;
   badge?: string;
 }
 

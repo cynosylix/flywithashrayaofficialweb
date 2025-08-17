@@ -4,12 +4,13 @@ import Package from '../../../../../models/Package';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectToDatabase();
     
-    const packageId = params.id;
+    const resolvedParams = await params;
+    const packageId = resolvedParams.id;
     
     if (!packageId) {
       return NextResponse.json(

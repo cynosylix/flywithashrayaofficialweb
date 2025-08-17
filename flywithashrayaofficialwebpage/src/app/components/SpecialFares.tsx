@@ -1,70 +1,79 @@
 "use client";
 import { motion, useInView, useAnimation } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cardVariants, containerVariants, FeatureItemVariants, floatingOrbVariants, PriceVariants, TitleVariants } from "../animationVariants";
 
-
-
+interface SpecialFare {
+  _id: string;
+  title: string;
+  subtitle?: string;
+  description: string;
+  shortDescription?: string;
+  price: number;
+  originalPrice: number;
+  discountPercentage?: number;
+  discountAmount?: number;
+  currency: string;
+  validFrom: Date;
+  validTo: Date;
+  travelPeriodText?: string;
+  bookingDeadline?: Date;
+  inclusions: string[];
+  isFeatured: boolean;
+  isLimitedTime: boolean;
+  isBestSeller: boolean;
+  images: { url: string; caption?: string; isFeatured?: boolean }[];
+  thumbnail?: string;
+  badgeText?: string;
+  badgeColor?: string;
+  fareType: string;
+  hotelIncluded?: boolean;
+  hotelRating?: number;
+}
 
 const SpecialFares = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: false, amount: 0.1 });
   const controls = useAnimation();
+  const [specials, setSpecials] = useState<SpecialFare[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchSpecialFares = async () => {
+     try {
+  const response = await fetch('/api/special-fares?limit=3');
+  if (!response.ok) {
+    // Set a friendly message instead of throwing an error
+    setSpecials([]); // Empty the specials array
+    return; // Exit early
+  }
+  
+  const data = await response.json();
+  
+  if (data.data.length === 0) {
+    // No special fares available
+    setSpecials([]);
+  } else {
+    setSpecials(data.data);
+  }
+  
+} catch (err) {
+  // For actual errors, still show an error message
+  setError(err instanceof Error ? err.message : 'An unknown error occurred');
+} finally {
+  setLoading(false);
+}
+    };
+
+    fetchSpecialFares();
+  }, []);
 
   useEffect(() => {
     if (isInView) {
       controls.start("visible");
     }
   }, [isInView, controls]);
-
-  const specials = [
-    {
-      title: "Summer Getaway Sale",
-      price: 899,
-      originalPrice: 1499,
-      features: [
-        "Valid for travel between June - August",
-        "Flights + 4-star hotel included",
-        "Free cancellation up to 30 days",
-        "10 European destinations"
-      ],
-      cta: "Grab This Deal",
-      highlightColor: "from-amber-400 to-yellow-500",
-      accentColor: "bg-amber-500",
-      icon: "☀️"
-    },
-    {
-      title: "Winter Escape",
-      price: 1199,
-      originalPrice: 1799,
-      features: [
-        "Book by September 30",
-        "Daily breakfast & spa credit",
-        "Room upgrade available",
-        "Ski resorts & tropical options"
-      ],
-      cta: "Book Now",
-      highlightColor: "from-blue-400 to-cyan-500",
-      accentColor: "bg-blue-500",
-      icon: "❄️"
-    },
-    {
-      title: "Honeymoon Package",
-      price: 2299,
-      originalPrice: 2999,
-      features: [
-        "Romantic ocean view suite",
-        "Champagne & flowers included",
-        "Couples massage & private dinner",
-        "Free anniversary return"
-      ],
-      cta: "Plan Honeymoon",
-      highlightColor: "from-pink-500 to-rose-500",
-      accentColor: "bg-rose-500",
-      icon: "💖"
-    }
-  ];
-
 
   // Checkmark SVG component
   const CheckmarkIcon = () => (
@@ -79,6 +88,65 @@ const SpecialFares = () => {
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
     </svg>
   );
+
+  // Get color classes based on fare type or other properties
+  const getColorClasses = (fare: SpecialFare) => {
+    if (fare.isBestSeller) {
+      return {
+        highlightColor: "from-amber-400 to-yellow-500",
+        accentColor: "bg-amber-500",
+        icon: "🏆"
+      };
+    }
+    if (fare.isLimitedTime) {
+      return {
+        highlightColor: "from-blue-400 to-cyan-500",
+        accentColor: "bg-blue-500",
+        icon: "⏳"
+      };
+    }
+    if (fare.hotelIncluded && fare.hotelRating && fare.hotelRating >= 4) {
+      return {
+        highlightColor: "from-pink-500 to-rose-500",
+        accentColor: "bg-rose-500",
+        icon: "🏨"
+      };
+    }
+    
+    // Default colors
+    return {
+      highlightColor: "from-emerald-400 to-teal-500",
+      accentColor: "bg-teal-500",
+      icon: "✈️"
+    };
+  };
+
+  // Get CTA text based on fare type
+  const getCtaText = (fare: SpecialFare) => {
+    if (fare.isLimitedTime) return "Book Now";
+    if (fare.fareType === 'Package Deal') return "View Package";
+    return "View Deal";
+  };
+
+  if (loading) {
+    return (
+      <section className="py-24 bg-gradient-to-b from-gray-950 to-gray-900">
+        <div className="container mx-auto px-4 text-center text-white">
+          Loading special offers...
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="py-24 bg-gradient-to-b from-gray-950 to-gray-900">
+        <div className="container mx-auto px-4 text-center text-red-400">
+          Error: {error}
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section 
@@ -135,101 +203,121 @@ const SpecialFares = () => {
           </motion.p>
         </motion.div>
 
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
-          variants={containerVariants}
-          initial="hidden"
-          animate={controls}
-        >
-          {specials.map((special, index) => (
-            <motion.div 
-              key={index}
-              className="flex perspective-1000"
-              variants={cardVariants}
-              whileHover="hover"
-            >
-              <div className={`relative flex-1 rounded-2xl overflow-hidden transform-style-preserve-3d transition-all duration-500 hover:z-10`}>
-                {/* Card background gradient */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${special.highlightColor} opacity-20`}></div>
-                
-                {/* Card content */}
-                <div className="relative bg-gray-900/80 backdrop-blur-sm border border-gray-800/50 rounded-2xl p-8 h-full flex flex-col">
-                  {/* Icon badge */}
-                  <motion.div 
-                    className={`w-16 h-16 ${special.accentColor} rounded-xl flex items-center justify-center text-2xl mb-6 mx-auto shadow-lg`}
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ 
-                      type: "spring",
-                      delay: 0.3 + index * 0.1,
-                      stiffness: 200,
-                      damping: 10
-                    }}
-                  >
-                    {special.icon}
-                  </motion.div>
-                  
-                  {/* Title */}
-                  <motion.h3 
-                    className="text-2xl font-bold text-center text-white mb-6"
-                    whileHover={{ color: "#fbbf24" }}
-                  >
-                    {special.title}
-                  </motion.h3>
-                  
-                  {/* Price */}
-                  <motion.div 
-                    className="text-center mb-8"
-                    variants={PriceVariants}
-                    whileHover="hover"
-                  >
-                    <div className="text-5xl font-bold text-white">
-                      ${special.price}
-                    </div>
-                    <div className="text-lg text-gray-400 line-through mt-1">
-                      ${special.originalPrice}
-                    </div>
-                    <div className={`text-sm ${special.accentColor} text-white px-3 py-1 rounded-full inline-block mt-2`}>
-                      Save ${special.originalPrice - special.price}
-                    </div>
-                  </motion.div>
-                  
-                  {/* Features */}
-                  <ul className="space-y-3 mb-8 flex-grow">
-                    {special.features.map((feature, i) => (
-                      <motion.li 
-                        key={i}
-                        className="flex items-start"
-                        custom={i}
-                        variants={FeatureItemVariants}
+        {specials.length === 0 ? (
+          <div className="text-center text-gray-400 py-10">
+            No special offers available at the moment. Please check back later.
+          </div>
+        ) : (
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
+            variants={containerVariants}
+            initial="hidden"
+            animate={controls}
+          >
+            {specials.map((special, index) => {
+              const colors = getColorClasses(special);
+              const ctaText = getCtaText(special);
+              
+              return (
+                <motion.div 
+                  key={special._id}
+                  className="flex perspective-1000"
+                  variants={cardVariants}
+                  whileHover="hover"
+                >
+                  <div className={`relative flex-1 rounded-2xl overflow-hidden transform-style-preserve-3d transition-all duration-500 hover:z-10`}>
+                    {/* Card background gradient */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${colors.highlightColor} opacity-20`}></div>
+                    
+                    {/* Card content */}
+                    <div className="relative bg-gray-900/80 backdrop-blur-sm border border-gray-800/50 rounded-2xl p-8 h-full flex flex-col">
+                      {/* Icon badge */}
+                      <motion.div 
+                        className={`w-16 h-16 ${colors.accentColor} rounded-xl flex items-center justify-center text-2xl mb-6 mx-auto shadow-lg`}
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ 
+                          type: "spring",
+                          delay: 0.3 + index * 0.1,
+                          stiffness: 200,
+                          damping: 10
+                        }}
                       >
-                        <CheckmarkIcon />
-                        <span className="text-gray-300">{feature}</span>
-                      </motion.li>
-                    ))}
-                  </ul>
-                  
-                  {/* CTA Button */}
-                  <motion.div
-                    whileHover={{ 
-                      scale: 1.02,
-                      transition: { duration: 0.2 }
-                    }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <a
-                      href="#contact"
-                      className={`group w-full py-4 px-6 text-center font-medium rounded-xl bg-gradient-to-r ${special.highlightColor} text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center space-x-2`}
-                    >
-                      <span>{special.cta}</span>
-                      <ArrowRightIcon />
-                    </a>
-                  </motion.div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+                        {colors.icon}
+                      </motion.div>
+                      
+                      {/* Title */}
+                      <motion.h3 
+                        className="text-2xl font-bold text-center text-white mb-6"
+                        whileHover={{ color: "#fbbf24" }}
+                      >
+                        {special.title}
+                      </motion.h3>
+                      
+                      {/* Subtitle if exists */}
+                      {special.subtitle && (
+                        <motion.p className="text-center text-gray-400 mb-4">
+                          {special.subtitle}
+                        </motion.p>
+                      )}
+                      
+                      {/* Price */}
+                      <motion.div 
+                        className="text-center mb-8"
+                        variants={PriceVariants}
+                        whileHover="hover"
+                      >
+                        <div className="text-5xl font-bold text-white">
+                          ${special.price}
+                        </div>
+                        <div className="text-lg text-gray-400 line-through mt-1">
+                          ${special.originalPrice}
+                        </div>
+                        {special.discountPercentage && (
+                          <div className={`text-sm ${colors.accentColor} text-white px-3 py-1 rounded-full inline-block mt-2`}>
+                            Save {special.discountPercentage}% (${special.discountAmount})
+                          </div>
+                        )}
+                      </motion.div>
+                      
+                      {/* Features (using inclusions) */}
+                      <ul className="space-y-3 mb-8 flex-grow">
+                        {special.inclusions.slice(0, 4).map((inclusion, i) => (
+                          <motion.li 
+                            key={i}
+                            className="flex items-start"
+                            custom={i}
+                            variants={FeatureItemVariants}
+                          >
+                            <CheckmarkIcon />
+                            <span className="text-gray-300">{inclusion}</span>
+                          </motion.li>
+                        ))}
+                      </ul>
+                      
+                      {/* CTA Button */}
+                      <motion.div
+                        whileHover={{ 
+                          scale: 1.02,
+                          transition: { duration: 0.2 }
+                        }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        <a
+                          href={`/special-fares/${special._id}`}
+                          className={`group w-full py-4 px-6 text-center font-medium rounded-xl bg-gradient-to-r ${colors.highlightColor} text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center space-x-2`}
+                        >
+                          <span>{ctaText}</span>
+                          <ArrowRightIcon />
+                        </a>
+                      </motion.div>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        )}
       </div>
 
       {/* Decorative floating elements */}

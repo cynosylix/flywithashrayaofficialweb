@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Calendar, Clock, MapPin, Users, Star, CheckCircle, Shield, Globe, Heart, Home } from 'react-feather';
+import { ArrowLeft, Calendar,  MapPin, Users, Star, CheckCircle, } from 'react-feather';
 import { Plane, Hotel } from 'lucide-react';
 import Link from 'next/link';
 import Header from '../../components/Header';
