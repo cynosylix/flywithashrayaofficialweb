@@ -1,13 +1,29 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
+const MONGODB_URI = process.env.MONGODB_URI;
 
-const connectionToDatabase = async () => {
-    try{
-        await mongoose.connect(process.env.MongoURL)
-        console.log('Connected to MongoDB')
-    }catch(err){
-        console.log(err)
-    }
+if (!MONGODB_URI) {
+  throw new Error("Please define the MONGODB_URI environment variable in Netlify");
 }
 
-export default connectionToDatabase
+let cached = global.mongoose;
+
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
+}
+
+async function connectionToDatabase() {
+  if (cached.conn) {
+    return cached.conn;
+  }
+
+  if (!cached.promise) {
+    cached.promise = mongoose.connect(MONGODB_URI).then((mongoose) => {
+      return mongoose;
+    });
+  }
+  cached.conn = await cached.promise;
+  return cached.conn;
+}
+
+export default connectionToDatabase;
