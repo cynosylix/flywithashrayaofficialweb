@@ -31,7 +31,8 @@ const PackagesSection = () => {
   useEffect(() => {
     const fetchPackages = async () => {
       try {
-        const response = await fetch('/api/admin/packages/?isActive=true');
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXTAUTH_URL || '';
+        const response = await fetch(`${baseUrl}/api/admin/packages/?isActive=true`);
 
         if (!response.ok) {
           throw new Error(`Failed to load packages (status: ${response.status})`);

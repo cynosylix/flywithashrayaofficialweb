@@ -24,7 +24,7 @@ export default function AdminDashboard() {
   const [selectedSpecialFare, setSelectedSpecialFare] = useState<SpecialFare | null>(null);
 
   const router = useRouter();
-
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXTAUTH_URL || '';
   useEffect(() => {
     fetchData();
   }, []);
@@ -90,7 +90,7 @@ export default function AdminDashboard() {
 
   const fetchPackages = async () => {
     try {
-      const response = await fetch('/api/admin/packages');
+      const response = await fetch(`${baseUrl}/api/admin/packages`);
       if (!response.ok) throw new Error('Failed to fetch packages');
 
       const result: ApiResponse<Package[]> = await response.json();
@@ -107,7 +107,7 @@ export default function AdminDashboard() {
 
   const fetchSpecialFares = async () => {
     try {
-      const response = await fetch('/api/admin/special-fares?isActive=true');
+      const response = await fetch(`${baseUrl}/api/admin/special-fares?isActive=true`);
       if (!response.ok) throw new Error('Failed to fetch special fares');
 
       const result: ApiResponse<SpecialFare[]> = await response.json();
@@ -129,8 +129,8 @@ const handlePackageSubmit = async (formData: Partial<Package>) => {
     setError(null);
     
     const endpoint = selectedPackage
-      ? `/api/admin/packages?id=${selectedPackage._id}`
-      : '/api/admin/packages';
+      ? `${baseUrl}/api/admin/packages?id=${selectedPackage._id}`
+      : '${baseUrl}/api/admin/packages';
 
     const method = selectedPackage ? 'PUT' : 'POST';
 
@@ -175,7 +175,7 @@ const handleDeletePackage = async (id: string) => {
     setLoading(true);
     setError(null);
     
-    const response = await fetch(`/api/admin/packages?id=${id}`, {
+    const response = await fetch(`${baseUrl}/api/admin/packages?id=${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -211,8 +211,8 @@ const handleDeletePackage = async (id: string) => {
     try {
       setLoading(true);
       const endpoint = selectedSpecialFare
-        ? `/api/admin/special-fares?id=${selectedSpecialFare._id}`
-        : '/api/admin/special-fares';
+        ? `${baseUrl}/api/admin/special-fares?id=${selectedSpecialFare._id}`
+        : `${baseUrl}/api/admin/special-fares`;
 
       const method = selectedSpecialFare ? 'PUT' : 'POST';
 
@@ -248,7 +248,7 @@ const handleDeletePackage = async (id: string) => {
       if (!confirm('Are you sure you want to delete this special fare?')) return;
 
       setLoading(true);
-      const response = await fetch(`/api/admin/special-fares?id=${id}`, {
+      const response = await fetch(`${baseUrl}/api/admin/special-fares?id=${id}`, {
         method: 'DELETE',
       });
 

@@ -57,7 +57,8 @@ export default function PackageDetailsPage() {
   useEffect(() => {
     const fetchPackageDetails = async () => {
       try {
-        const response = await fetch(`/api/packages/${packageId}`);
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXTAUTH_URL || '';
+        const response = await fetch(`${baseUrl}/api/packages/${packageId}`);
         
         if (!response.ok) {
           throw new Error('Failed to fetch package details');
