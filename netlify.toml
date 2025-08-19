@@ -1,0 +1,7 @@
+[build]
+  base = "flywithashrayaofficialwebpage"
+  command = "cd flywithashrayaofficialwebpage && npm install && npm run build"
+  publish = "flywithashrayaofficialwebpage/.next"
+
+[context.production.environment]
+  NODE_VERSION = "21.5.0"  # Explicitly set Node version
