@@ -1,10 +1,11 @@
 [build]
-  base = "flywithashrayaofficialwebpage"
+  base = "flywithashrayaofficialweb"
   command = "npm install && npm run build"
   publish = "flywithashrayaofficialwebpage/.next"
 
 [context.production.environment]
   NODE_VERSION = "21.5.0"  # Explicitly set Node version
 
-
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 
