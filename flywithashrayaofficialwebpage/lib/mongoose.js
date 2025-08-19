@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const MONGODB_URI = process.env.MONGODB_URI;
 
 if (!MONGODB_URI) {
-  throw new Error("Please define the MONGODB_URI environment variable in Netlify");
+  console.warn("MONGODB_URI is not defined. Using fallback connection string.");
 }
 
 let cached = global.mongoose;
@@ -18,8 +18,16 @@ async function connectionToDatabase() {
   }
 
   if (!cached.promise) {
-    cached.promise = mongoose.connect(MONGODB_URI).then((mongoose) => {
+    const uri = MONGODB_URI || "mongodb://localhost:27017/flywithashraya";
+    
+    cached.promise = mongoose.connect(uri, {
+      bufferCommands: false,
+    }).then((mongoose) => {
+      console.log("MongoDB connected successfully");
       return mongoose;
+    }).catch((error) => {
+      console.error("MongoDB connection error:", error);
+      throw error;
     });
   }
   cached.conn = await cached.promise;
