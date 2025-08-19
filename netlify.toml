@@ -1,13 +1,10 @@
 [build]
   base = "flywithashrayaofficialwebpage"
   command = "npm run build"
-  publish = ".next"
-
-
-
-[context.production.environment]
-  NODE_VERSION = "21.5.0"  # Explicitly set Node version
+  publish = "out"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
+[context.production.environment]
+  NODE_VERSION = "20"  # Netlify supports Node 20
