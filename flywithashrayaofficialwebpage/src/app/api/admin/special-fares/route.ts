@@ -3,37 +3,45 @@ import { NextRequest } from 'next/server';
 import connectionToDatabase from '../../../../../lib/mongoose';
 import { SpecialFare } from '../../../../../models/SpecialFare';
 
+// Helper function for error responses
+const errorResponse = (message: string, status: number) => {
+  return NextResponse.json(
+    { success: false, error: message },
+    { status }
+  );
+};
+
 export async function GET(request: NextRequest) {
   try {
     await connectionToDatabase();
     
     const { searchParams } = new URL(request.url);
-    const isActive = searchParams.get('isActive') ?? 'true';
+    const isActive = searchParams.get('isActive');
     const isFeatured = searchParams.get('isFeatured');
     const isLimitedTime = searchParams.get('isLimitedTime');
     const limit = searchParams.get('limit');
     
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const query: any = { isActive: isActive === 'true' };
-    if (isFeatured === 'true') query.isFeatured = true;
+    const query: any = {};
+    if (isActive !== null) query.isActive = isActive === 'true';
+    if (isFeatured !== null) query.isFeatured = isFeatured === 'true';
     if (isLimitedTime === 'true') query.isLimitedTime = true;
     
-    let queryBuilder = SpecialFare.find(query)
-      .sort({ createdAt: -1 });
+    let queryBuilder = SpecialFare.find(query).sort({ createdAt: -1 });
     
     if (limit && !isNaN(Number(limit))) {
       queryBuilder = queryBuilder.limit(Number(limit));
     }
     
     const specialFares = await queryBuilder.exec();
-    return NextResponse.json({ success: true, data: specialFares }, { status: 200 });
     
+    return NextResponse.json(
+      { success: true, data: specialFares },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error fetching special fares:", error);
-    return NextResponse.json(
-      { success: false, error: "Failed to load special fares" },
-      { status: 500 }
-    );
+    return errorResponse("Internal server error", 500);
   }
 }
 
@@ -50,27 +58,39 @@ export async function POST(request: NextRequest) {
     ];
     
     const missingFields = requiredFields.filter(field => !data[field]);
+    
     if (missingFields.length > 0) {
-      return NextResponse.json(
-        { success: false, error: `Missing required fields: ${missingFields.join(', ')}` },
-        { status: 400 }
-      );
+      return errorResponse(`Missing required fields: ${missingFields.join(', ')}`, 400);
     }
     
-    const newFare = new SpecialFare(data);
+    // Validate price fields are numbers
+    if (isNaN(Number(data.price)) || isNaN(Number(data.originalPrice))) {
+      return errorResponse("Price and originalPrice must be numbers", 400);
+    }
+    
+    const newFare = new SpecialFare({
+      ...data,
+      price: Number(data.price),
+      originalPrice: Number(data.originalPrice),
+      isActive: data.isActive || false,
+      isFeatured: data.isFeatured || false,
+      isLimitedTime: data.isLimitedTime || false,
+    });
+    
     await newFare.save();
     
     return NextResponse.json(
-      { success: true, message: "Special fare created", data: newFare },
+      { 
+        success: true,
+        message: "Special fare created successfully", 
+        data: newFare 
+      },
       { status: 201 }
     );
     
   } catch (error) {
     console.error("Error creating special fare:", error);
-    return NextResponse.json(
-      { success: false, error: "Failed to create special fare" },
-      { status: 500 }
-    );
+    return errorResponse("Internal server error", 500);
   }
 }
 
@@ -80,38 +100,47 @@ export async function PUT(request: NextRequest) {
     
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
+    
     if (!id) {
-      return NextResponse.json(
-        { success: false, error: "Special fare ID required" },
-        { status: 400 }
-      );
+      return errorResponse("Special fare ID is required", 400);
     }
     
     const data = await request.json();
+    
+    // Validate price fields if provided
+    if (data.price && isNaN(Number(data.price))) {
+      return errorResponse("Price must be a number", 400);
+    }
+    if (data.originalPrice && isNaN(Number(data.originalPrice))) {
+      return errorResponse("Original price must be a number", 400);
+    }
+    
     const updatedFare = await SpecialFare.findByIdAndUpdate(
       id,
-      { ...data, updatedAt: new Date() },
-      { new: true }
+      { 
+        ...data,
+        ...(data.price && { price: Number(data.price) }),
+        ...(data.originalPrice && { originalPrice: Number(data.originalPrice) }),
+        updatedAt: new Date() 
+      },
+      { new: true, runValidators: true }
     );
     
     if (!updatedFare) {
-      return NextResponse.json(
-        { success: false, error: "Special fare not found" },
-        { status: 404 }
-      );
+      return errorResponse("Special fare not found", 404);
     }
     
     return NextResponse.json(
-      { success: true, message: "Special fare updated", data: updatedFare },
+      { 
+        success: true,
+        message: "Special fare updated successfully", 
+        data: updatedFare 
+      },
       { status: 200 }
     );
-    
   } catch (error) {
     console.error("Error updating special fare:", error);
-    return NextResponse.json(
-      { success: false, error: "Failed to update special fare" },
-      { status: 500 }
-    );
+    return errorResponse("Internal server error", 500);
   }
 }
 
@@ -121,37 +150,26 @@ export async function DELETE(request: NextRequest) {
     
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
+    
     if (!id) {
-      return NextResponse.json(
-        { success: false, error: "Special fare ID required" },
-        { status: 400 }
-      );
+      return errorResponse("Special fare ID is required", 400);
     }
     
-    // Soft delete (recommended)
-    const deletedFare = await SpecialFare.findByIdAndUpdate(
-      id,
-      { isActive: false, updatedAt: new Date() },
-      { new: true }
-    );
+    const deletedFare = await SpecialFare.findByIdAndDelete(id);
     
     if (!deletedFare) {
-      return NextResponse.json(
-        { success: false, error: "Special fare not found" },
-        { status: 404 }
-      );
+      return errorResponse("Special fare not found", 404);
     }
     
     return NextResponse.json(
-      { success: true, message: "Special fare deactivated" },
+      { 
+        success: true,
+        message: "Special fare deleted successfully" 
+      },
       { status: 200 }
     );
-    
   } catch (error) {
     console.error("Error deleting special fare:", error);
-    return NextResponse.json(
-      { success: false, error: "Failed to deactivate special fare" },
-      { status: 500 }
-    );
+    return errorResponse("Internal server error", 500);
   }
 }
