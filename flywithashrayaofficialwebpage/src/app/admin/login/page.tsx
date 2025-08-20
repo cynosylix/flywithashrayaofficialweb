@@ -18,7 +18,7 @@ export default function AdminLogin() {
 
     try {
       const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXTAUTH_URL || '';
-      const response = await fetch(`${baseUrl}/api/admin/login`, {
+      const response = await fetch(`/api/admin/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
