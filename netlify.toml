@@ -1,8 +1,7 @@
 [build]
   base = "flywithashrayaofficialwebpage"
   command = "npm run build"
-  publish = "out_publish"
-  functions = "out_functions"
+  publish = "flywithashrayaofficialwebpage/.next"
 
 [build.environment]
   NODE_VERSION = "20"
@@ -13,6 +12,9 @@
 
 [context.deploy-preview.environment]
   NODE_VERSION = "20"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 
 [[redirects]]
   from = "/api/*"
@@ -25,8 +27,3 @@
     Access-Control-Allow-Origin = "*"
     Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
     Access-Control-Allow-Headers = "Content-Type, Authorization"
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
