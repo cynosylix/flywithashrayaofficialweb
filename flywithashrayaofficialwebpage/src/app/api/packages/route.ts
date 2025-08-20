@@ -4,12 +4,9 @@ import Package from '../../../../models/Package';
 
 export async function GET(request: NextRequest) {
   try {
-    // Add timeout handling
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
-    
+    console.log('Connecting to database...');
     await connectionToDatabase();
-    clearTimeout(timeoutId);
+    console.log('Database connected successfully');
     
     const { searchParams } = new URL(request.url);
     const isActive = searchParams.get('isActive');
@@ -19,26 +16,20 @@ export async function GET(request: NextRequest) {
       query = { isActive: true };
     }
     
+    console.log('Fetching packages with query:', query);
     const packages = await Package.find(query)
       .sort({ createdAt: -1 })
       .lean()
-      .limit(50); // Limit results for performance
+      .limit(50);
     
+    console.log(`Found ${packages.length} packages`);
     return NextResponse.json({ packages });
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error('Error fetching packages:', error);
     
-    // Handle timeout specifically
-    if (error.name === 'AbortError') {
-      return NextResponse.json(
-        { error: 'Database connection timeout' },
-        { status: 504 }
-      );
-    }
-    
     return NextResponse.json(
-      { error: 'Failed to fetch packages' },
+      { error: 'Failed to fetch packages', details: error.message },
       { status: 500 }
     );
   }

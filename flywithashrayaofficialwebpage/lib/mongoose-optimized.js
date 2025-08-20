@@ -3,14 +3,15 @@ import mongoose from "mongoose";
 const MONGODB_URI = process.env.MONGODB_URI;
 
 if (!MONGODB_URI) {
-  console.warn("MONGODB_URI is not defined. Using fallback connection string.");
+  console.error("MONGODB_URI is not defined. Please set the environment variable.");
+  throw new Error("MONGODB_URI environment variable is required");
 }
 
 // Enhanced connection options for serverless
 const options = {
   bufferCommands: false,
   maxPoolSize: 1, // Limit to 1 connection for serverless
-  serverSelectionTimeoutMS: 5000, // 5 second timeout
+  serverSelectionTimeoutMS: 10000, // 10 second timeout
   socketTimeoutMS: 45000, // 45 second socket timeout
   bufferMaxEntries: 0,
   useNewUrlParser: true,

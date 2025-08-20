@@ -6,6 +6,8 @@ const nextConfig: NextConfig = {
     unoptimized: true,
     domains: ["images.unsplash.com", "www.holidify.com"],
   },
+  
+
 };
 
 export default nextConfig;

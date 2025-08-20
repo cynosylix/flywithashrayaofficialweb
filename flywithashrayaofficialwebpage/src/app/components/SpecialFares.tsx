@@ -389,7 +389,7 @@ const SpecialFares = () => {
 
                     {/* CTA Button */}
                     <motion.a
-                      href="/contact"
+                      href="/Contact"
                       className={`group w-full py-3 text-center font-medium text-sm rounded-lg bg-gradient-to-r ${colors.highlightColor} text-white flex items-center justify-center mt-auto relative overflow-hidden`}
                       whileHover={{ 
                         scale: 1.03,
