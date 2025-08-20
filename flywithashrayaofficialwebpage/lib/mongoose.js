@@ -18,7 +18,7 @@ async function connectionToDatabase() {
   }
 
   if (!cached.promise) {
-    const uri = MONGODB_URI || "mongodb://localhost:27017/flywithashraya";
+    const uri = MONGODB_URI ;
     
     cached.promise = mongoose.connect(uri, {
       bufferCommands: false,
