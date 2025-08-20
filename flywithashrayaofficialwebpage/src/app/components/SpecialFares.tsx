@@ -60,8 +60,7 @@ const SpecialFares = () => {
     const fetchSpecialFares = async () => {
       try {
         setLoading(true);
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXTAUTH_URL || '';
-        const response = await fetch(`${baseUrl}/api/admin/special-fares?limit=3`);
+        const response = await fetch('/api/special-fares?limit=3');
         
         if (!response.ok) {
           const errorData = await response.json().catch(() => ({}));
