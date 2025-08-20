@@ -7,7 +7,7 @@ import Footer from '../components/Footer';
 import PackagesSection from '../components/PackagesSection';
 import ContactSection from '../components/ContactSection';
 import HeroSection from '../components/HeroSection';
-import TestimonialsSection from '../components/TestimonialsSection';
+// import TestimonialsSection from '../components/TestimonialsSection';
 import SpecialFares from '../components/SpecialFares';
 // import TrustedPartners from '../components/TrustedPartners';
 import AffiliatedPartners from '../components/AffiliatedPartners';
@@ -30,7 +30,7 @@ const HomePage: NextPage = () => {
         <SpecialFares />
         {/* <TrustedPartners /> */}
         <AffiliatedPartners />
-        <TestimonialsSection />
+        {/* <TestimonialsSection /> */}
         <ContactSection />
       </main>
       <Footer />

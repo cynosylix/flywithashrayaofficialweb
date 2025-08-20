@@ -31,7 +31,7 @@ const PackagesSection = () => {
   useEffect(() => {
     const fetchPackages = async () => {
       try {
-        const response = await fetch('/api/packages?isActive=true');
+        const response = await fetch('/api/packages?isActive=true?limit=4');
 
         if (!response.ok) {
           throw new Error(`Failed to load packages (status: ${response.status})`);
