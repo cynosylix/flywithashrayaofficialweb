@@ -7,15 +7,14 @@ const contactInfo: ContactInfo[] = [
     icon: "map-marker-alt",
     title: "Our Office",
     content: [
-      "123 Travel Street, Suite 456",
-      "New York, NY 10001"
+      "Velikkakathu Building Kalachanda Jn., NH 183 Behind Federal Bank ATM Pampady, Kottayam, Kerala, India"
     ]
   },
   {
     icon: "phone-alt",
     title: "Call Us",
     content: [
-      "+1 (555) 123-4567",
+      "+91 9400416016",
       "Mon-Fri: 9am-6pm EST"
     ]
   },
@@ -24,7 +23,7 @@ const contactInfo: ContactInfo[] = [
     title: "Email Us",
     content: [
       "info@flywithashraya.com",
-      "bookings@flywithashraya.com"
+      "flywithashraya@gmail.com"
     ]
   }
 ];
@@ -168,7 +167,7 @@ const ContactSection = () => {
               <h4 className="text-xl font-bold mb-6 text-gray-900">Follow Our Journey</h4>
               <div className="flex space-x-4">
                 <motion.a 
-                  href="#" 
+                  href="https://www.facebook.com/flywithashraya" 
                   className="w-12 h-12 bg-gray-50 hover:bg-blue-600 text-gray-700 hover:text-white rounded-xl flex items-center justify-center transition-all duration-300"
                   whileHover={{ y: -3, scale: 1.1 }}
                 >
@@ -177,7 +176,7 @@ const ContactSection = () => {
                   </svg>
                 </motion.a>
                 <motion.a 
-                  href="#" 
+                  href="https://twitter.com/flywithashraya" 
                   className="w-12 h-12 bg-gray-50 hover:bg-blue-400 text-gray-700 hover:text-white rounded-xl flex items-center justify-center transition-all duration-300"
                   whileHover={{ y: -3, scale: 1.1 }}
                 >
@@ -186,7 +185,7 @@ const ContactSection = () => {
                   </svg>
                 </motion.a>
                 <motion.a 
-                  href="#" 
+                  href="https://www.instagram.com/flywithashraya.in/" 
                   className="w-12 h-12 bg-gray-50 hover:bg-pink-600 text-gray-700 hover:text-white rounded-xl flex items-center justify-center transition-all duration-300"
                   whileHover={{ y: -3, scale: 1.1 }}
                 >
