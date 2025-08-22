@@ -7,6 +7,8 @@ import SpecialFareModal from '@/app/admin/modals/SpecialFareModal';
 import PackageDetailModal from '@/app/admin/modals/PackageDetailModal';
 import SpecialFareDetailModal from '@/app/admin/modals/SpecialFareDetailModal';
 import { Package, SpecialFare, ApiResponse } from '@/app/types/admin.types';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function AdminDashboard() {
   const [packages, setPackages] = useState<Package[]>([]);
@@ -24,14 +26,14 @@ export default function AdminDashboard() {
   const [selectedSpecialFare, setSelectedSpecialFare] = useState<SpecialFare | null>(null);
 
   const router = useRouter();
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXTAUTH_URL || '';
+
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async (retryCount = 0) => {
     const maxRetries = 3;
-    const retryDelay = 1000 * (retryCount + 1); // Exponential backoff
+    const retryDelay = 1000 * (retryCount + 1);
 
     try {
       setLoading(true);
@@ -42,7 +44,6 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXTAUTH_URL || 
         fetchSpecialFares()
       ]);
 
-      // Handle partial failures
       const [packagesResult, specialFaresResult] = results;
 
       if (packagesResult.status === 'fulfilled') {
@@ -90,7 +91,8 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXTAUTH_URL || 
 
   const fetchPackages = async () => {
     try {
-      const response = await fetch(`${baseUrl}/api/admin/packages`);
+      // Use absolute URL to avoid redirect issues
+      const response = await fetch(`/api/admin/adminpackages?isActive=true`);
       if (!response.ok) throw new Error('Failed to fetch packages');
 
       const result: ApiResponse<Package[]> = await response.json();
@@ -107,7 +109,8 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXTAUTH_URL || 
 
   const fetchSpecialFares = async () => {
     try {
-      const response = await fetch(`${baseUrl}/api/admin/special-fares?isActive=true`);
+      // Use absolute URL to avoid redirect issues
+      const response = await fetch(`/api/admin/admin-special-fares?isActive=true`);
       if (!response.ok) throw new Error('Failed to fetch special fares');
 
       const result: ApiResponse<SpecialFare[]> = await response.json();
@@ -122,97 +125,89 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXTAUTH_URL || 
     }
   };
 
-  // Update the handlePackageSubmit function
-const handlePackageSubmit = async (formData: Partial<Package>) => {
-  try {
-    setLoading(true);
-    setError(null);
-    
-    const endpoint = selectedPackage
-      ? `${baseUrl}/api/admin/packages?id=${selectedPackage._id}`
-      : '${baseUrl}/api/admin/packages';
+  const handlePackageSubmit = async (formData: Partial<Package>) => {
+    try {
+      setLoading(true);
+      setError(null);
 
-    const method = selectedPackage ? 'PUT' : 'POST';
+      const endpoint = selectedPackage
+        ? `${window.location.origin}/api/admin/adminpackages?id=${selectedPackage._id}`
+        : `${window.location.origin}/api/admin/adminpackages`;
 
-    const response = await fetch(endpoint, {
-      method,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
+      const method = selectedPackage ? 'PUT' : 'POST';
 
-    const result = await response.json();
+      const response = await fetch(endpoint, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-    if (!response.ok) {
-      throw new Error(result.error || result.message || 'Failed to save package');
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || result.message || 'Failed to save package');
+      }
+
+      if (!result.success && result.error) {
+        throw new Error(result.error);
+      }
+
+      setShowPackageModal(false);
+      setSelectedPackage(null);
+      await fetchPackages();
+
+    } catch (error) {
+      console.error('Error saving package:', error);
+      setError(error instanceof Error ? error.message : 'Failed to save package');
+    } finally {
+      setLoading(false);
     }
+  };
 
-    if (!result.success && result.error) {
-      throw new Error(result.error);
+  const handleDeletePackage = async (id: string) => {
+    try {
+      if (!confirm('Are you sure you want to delete this package?')) return;
+
+      setLoading(true);
+      setError(null);
+
+      const response = await fetch(`${window.location.origin}/api/admin/adminpackages?id=${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || result.message || 'Failed to delete package');
+      }
+
+      if (!result.success && result.error) {
+        throw new Error(result.error);
+      }
+
+      setShowPackageDetailModal(false);
+      setSelectedPackage(null);
+      await fetchPackages();
+
+    } catch (error) {
+      console.error('Error deleting package:', error);
+      setError(error instanceof Error ? error.message : 'Failed to delete package');
+    } finally {
+      setLoading(false);
     }
-
-    setShowPackageModal(false);
-    setSelectedPackage(null);
-    await fetchPackages();
-    
-    // Optional: Add success notification
-    // setSuccessMessage(selectedPackage ? 'Package updated successfully' : 'Package created successfully');
-    
-  } catch (error) {
-    console.error('Error saving package:', error);
-    setError(error instanceof Error ? error.message : 'Failed to save package');
-  } finally {
-    setLoading(false);
-  }
-};
-
-// Update the handleDeletePackage function
-const handleDeletePackage = async (id: string) => {
-  try {
-    if (!confirm('Are you sure you want to delete this package?')) return;
-
-    setLoading(true);
-    setError(null);
-    
-    const response = await fetch(`${baseUrl}/api/admin/packages?id=${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    const result = await response.json();
-
-    if (!response.ok) {
-      throw new Error(result.error || result.message || 'Failed to delete package');
-    }
-
-    if (!result.success && result.error) {
-      throw new Error(result.error);
-    }
-
-    setShowPackageDetailModal(false);
-    setSelectedPackage(null);
-    await fetchPackages();
-    
-    // Optional: Add success notification
-    console.log('Package deleted successfully');
-    
-  } catch (error) {
-    console.error('Error deleting package:', error);
-    setError(error instanceof Error ? error.message : 'Failed to delete package');
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   const handleSpecialFareSubmit = async (formData: Partial<SpecialFare>) => {
     try {
       setLoading(true);
       const endpoint = selectedSpecialFare
-        ? `${baseUrl}/api/admin/special-fares?id=${selectedSpecialFare._id}`
-        : `${baseUrl}/api/admin/special-fares`;
+        ? `${window.location.origin}/api/admin/admin-special-fares?id=${selectedSpecialFare._id}`
+        : `${window.location.origin}/api/admin/admin-special-fares`;
 
       const method = selectedSpecialFare ? 'PUT' : 'POST';
 
@@ -241,14 +236,12 @@ const handleDeletePackage = async (id: string) => {
     }
   };
 
-  
-
   const handleDeleteSpecialFare = async (id: string) => {
     try {
       if (!confirm('Are you sure you want to delete this special fare?')) return;
 
       setLoading(true);
-      const response = await fetch(`${baseUrl}/api/admin/special-fares?id=${id}`, {
+      const response = await fetch(`${window.location.origin}/api/admin/admin-special-fares?id=${id}`, {
         method: 'DELETE',
       });
 
@@ -293,19 +286,54 @@ const handleDeletePackage = async (id: string) => {
       </div>
     );
   }
+  const handleLogout = () => {
+    // Clear session/token here (depends on your auth setup)
+    // e.g., localStorage.removeItem("token");
+    // or call /api/auth/logout
+
+    router.push("/admin/login"); // redirect to login page
+  };
+
 
   return (
     <div className="min-h-screen bg-gray-100">
       <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
-            <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-            <button
-              onClick={() => router.push('/')}
-              className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+            {/* Left: Title */}
+
+
+            {/* Center: Logo */}
+            <Link
+              href="/"
+              className="flex items-center h-14 w-auto min-w-[120px] max-w-[160px]"
             >
-              Back to Home
-            </button>
+              <Image
+                src="/logo.png"
+                alt="Company Logo"
+                width={160}
+                height={56}
+                className="w-full h-auto object-contain object-left"
+                priority
+              />
+            </Link>
+
+
+            {/* Right: Buttons */}
+            <div className="flex gap-3">
+              <button
+                onClick={() => router.push("/")}
+                className="bg-gray-500 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded"
+              >
+                Home
+              </button>
+              <button
+                onClick={handleLogout}
+                className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded"
+              >
+                Logout
+              </button>
+            </div>
           </div>
         </div>
       </header>
@@ -318,8 +346,8 @@ const handleDeletePackage = async (id: string) => {
                 <button
                   onClick={() => setActiveTab('packages')}
                   className={`py-2 px-1 border-b-2 font-medium text-sm ${activeTab === 'packages'
-                      ? 'border-blue-500 text-blue-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700'
                     }`}
                 >
                   Packages ({packages.length})
@@ -327,8 +355,8 @@ const handleDeletePackage = async (id: string) => {
                 <button
                   onClick={() => setActiveTab('specialFares')}
                   className={`py-2 px-1 border-b-2 font-medium text-sm ${activeTab === 'specialFares'
-                      ? 'border-blue-500 text-blue-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700'
                     }`}
                 >
                   Special Fares ({specialFares.length})
@@ -374,7 +402,7 @@ const handleDeletePackage = async (id: string) => {
               <div>
                 <h2 className="text-2xl font-semibold mb-4">Manage Packages</h2>
                 {packages.length === 0 ? (
-                  <p className="text-gray-500">No packages found. Click Add New Package&lsquo; to create one.</p>
+                  <p className="text-gray-500">No packages found. Click Add New Package to create one.</p>
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {packages.map((pkg) => (

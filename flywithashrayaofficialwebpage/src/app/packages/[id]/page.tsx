@@ -58,7 +58,7 @@ export default function PackageDetailsPage() {
     const fetchPackageDetails = async () => {
       try {
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXTAUTH_URL || '';
-        const response = await fetch(`${baseUrl}/api/packages/${packageId}`);
+        const response = await fetch(`/api/packages/${packageId}`);
         
         if (!response.ok) {
           throw new Error('Failed to fetch package details');

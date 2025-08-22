@@ -120,13 +120,7 @@ export async function PUT(request: NextRequest) {
     );
   } catch (error) {
     console.error("Error updating package:", error);
-    
-    // Handle mongoose validation errors
-    // if (error.name === 'ValidationError') {
-    //   return errorResponse(error.message, 400);
-    // }
-    
-    // return errorResponse("Internal server error", 500);
+    return errorResponse("Internal server error", 500);
   }
 }
 
