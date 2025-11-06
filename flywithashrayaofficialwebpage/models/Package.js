@@ -13,7 +13,7 @@ const packageSchema = new mongoose.Schema({
     },
     price: { 
         type: Number, 
-        required: false 
+        default : 0
     },
     duration: { 
         type: String, 
