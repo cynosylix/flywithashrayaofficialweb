@@ -49,7 +49,7 @@ export default async function ServiceDetailPage({ params }: ServiceDetailPagePro
       <Header />
       
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-blue-600 to-blue-700 text-white py-20">
+      <div className="relative bg-[#5700ae] text-white py-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center">
             <div className="text-6xl mb-4">{service.icon}</div>

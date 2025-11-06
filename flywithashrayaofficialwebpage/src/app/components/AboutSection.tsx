@@ -182,7 +182,7 @@ const AboutSection = () => {
               }}
             >
               <div className="text-xs uppercase tracking-wider">Established</div>
-              <div className="text-2xl">2010</div>
+              <div className="text-2xl">2022</div>
             </motion.div>
 
             {/* Feature card */}

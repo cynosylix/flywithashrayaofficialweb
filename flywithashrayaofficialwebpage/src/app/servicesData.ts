@@ -303,7 +303,7 @@ export const services: ServiceCategory[] = [
       {
         slug: "special-assistance",
         name: "Special Assistance for Senior Citizens & Children",
-        icon: "👵👶",
+        icon: "",
         description: "Dedicated support for special travel needs.",
         detailedDescription: "Personalized assistance for senior citizens, children, and travelers with special requirements."
       },
