@@ -199,7 +199,6 @@ export default function PackageModal({
                   name="price"
                   value={formData.price || ''}
                   onChange={handleChange}
-                  required
                   min="0"
                   step="0.01"
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
