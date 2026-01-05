@@ -68,7 +68,7 @@ export default function PackageModal({
     departureDates: [],
     cancellationPolicy: '',
     contact: {
-      address: 'Velikkakathu Building, Kalachanda Jn., NH 183, Pampady, Kottayam, Kerala, India - 686502',
+      address: "Vin's Tower, Kalachanda Jn., NH 183, Pampady, Kottayam, Kerala, India - 686502",
       phoneNumbers: ['+91 9400416016', '+91 9496416016', '+965 69680820'],
       website: 'www.flywithashraya.com'
     },

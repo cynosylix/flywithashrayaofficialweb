@@ -43,7 +43,7 @@ const locations = [
   {
     id: 1,
     title: "Head Office - Pampady",
-    address: "Velikkakathu Building Kalachanda Jn., NH 183 Behind Federal Bank ATM Pampady, Kottayam, Kerala, India",
+    address: "Vin's Tower, Kalachanda Jn., NH 183 Behind Federal Bank ATM Pampady, Kottayam, Kerala, India",
     phones: "+91 9400416016\n+91 9496416016",
     email: "info@flywithashraya.com",
     hours: "Mon-Sat: 9AM - 6PM",

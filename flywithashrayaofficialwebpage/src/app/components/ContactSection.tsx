@@ -7,8 +7,7 @@ const contactInfo: ContactInfo[] = [
     icon: "map-marker-alt",
     title: "Our Office",
     content: [
-      "123 Travel Street, Suite 456",
-      "New York, NY 10001"
+      "Vin's Tower, Kalachanda Jn., NH 183 Behind Federal Bank ATM Pampady, Kottayam, Kerala, India"
     ]
   },
   {

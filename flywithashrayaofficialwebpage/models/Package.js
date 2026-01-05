@@ -158,7 +158,7 @@ const packageSchema = new mongoose.Schema({
     contact: {
         address: {
             type: String,
-            default: "Velikkakathu Building, Kalachanda Jn., NH 183, Pampady, Kottayam, Kerala, India - 686502"
+            default: "Vin's Tower, Kalachanda Jn., NH 183, Pampady, Kottayam, Kerala, India - 686502"
         },
         phoneNumbers: [{
             type: String,
