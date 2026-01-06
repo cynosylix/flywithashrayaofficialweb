@@ -1,10 +1,25 @@
 [build]
   base = "flywithashrayaofficialwebpage"
   command = "npm run build"
-  publish = "out"
+  # Don't set publish directory - let Next.js plugin handle it
+
+[build.environment]
+  NODE_VERSION = "20"
+  NPM_VERSION = "9"
+
+[context.production.environment]
+  NODE_VERSION = "20"
+
+[context.deploy-preview.environment]
+  NODE_VERSION = "20"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
-[context.production.environment]
-  NODE_VERSION = "20"  # Netlify supports Node 20
+# CORS headers for API routes
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+    Access-Control-Allow-Headers = "Content-Type, Authorization"
